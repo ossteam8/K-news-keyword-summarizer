@@ -8,6 +8,7 @@ local_settings.py
 # datebase
 db.sqlite3
 media
+my_settings.py
 
 #no secrets.json file
 *secrets.json
