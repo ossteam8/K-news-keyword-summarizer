@@ -38,7 +38,6 @@ def get_secret(setting, secrets=secrets):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret("SECRET_KEY")
-# SECRET_KEY = 'django-insecure-l+r52idk+@!nnu4&qe5heb)g%duo70wifb)8ua^%&v=4ucwn)c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
