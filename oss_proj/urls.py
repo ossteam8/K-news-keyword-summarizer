@@ -20,7 +20,6 @@ import crawling.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', crawling.views.index, name = 'index'),
-    path('charts/', crawling.views.charts, name = 'charts'),
-    path('tables/', crawling.views.tables, name = 'tables'),
+    path('keywordCharts/', crawling.views.keywordCharts, name = 'keywordCharts'),
 ]
 
