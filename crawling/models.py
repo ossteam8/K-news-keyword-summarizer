@@ -8,7 +8,7 @@ from picklefield.fields import PickledObjectField
 class Category(models.Model):
     caterory = models.CharField(max_length=64)
     keywords = models.JSONField(default=dict)
-    
+# politic, economic, social
 
 class SearchWord(models.Model):
     search_word = models.CharField(max_length=64)
@@ -26,6 +26,7 @@ class Article(models.Model):
     summary = models.TextField()
     vectors = PickledObjectField()
     similarity = models.FloatField()  # localize=False 일 때 NumberInput, 그 외 TextInput
+    register_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
             return self.title
@@ -41,11 +42,4 @@ class Article(models.Model):
     #     obj.save()
 
 
-    # CATEGORY_CHOICES = [
-    #     ('정치', 'politic'),
-    #     ('경제', 'economic'),
-    #     ('사회', 'social'),
-    # ]
-    # category = models.CharField(max_length=64, choices=CATEGORY_CHOICES)
-
-
+    
