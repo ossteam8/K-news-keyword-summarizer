@@ -78,32 +78,24 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Contents</th>
                                     <th>Category</th>
-                                    <th>Age</th>
+                                    <th>URL</th>
                                     <th>Published Date</th>
-                                    <th>Salary</th>
                                 </tr>
                             </thead>
-                            <!-- <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </tfoot> -->
                             <tbody>
+                                {% for article in article_list %}
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
+                                    <td>{{ article.name }}</td>
+                                    {% if article.category %}
+                                        <td>{{ article.category }}</td>
+                                    {% else %}
+                                        <td>None</td>
+                                    {% endif %}
+                                    <td>{{ article.url }}</td>
+                                    <td>{{ article.register_date }}</td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
