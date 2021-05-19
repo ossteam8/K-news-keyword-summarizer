@@ -7,7 +7,7 @@ var ctx = document.getElementById("myBarChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],  // 카테고리에 기반한 키워드 종류
+    labels: ["keyword_1", "keyword_2", "keyword_3", "keyword_4", "keyword_5", "keyword_6"],  // 카테고리에 기반한 키워드 종류 (10개? 정도)
     datasets: [{
       label: "Revenue",
       backgroundColor: "rgba(2,117,216,1)",
