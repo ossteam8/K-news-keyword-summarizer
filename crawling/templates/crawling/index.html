@@ -8,43 +8,18 @@
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
             <div class="row">
+                {% for category in category_list %}
                 <div class="col-xl-3 col-md-6">
-                    <div class="card bg-primary text-white mb-4">
-                        <div class="card-body">정치</div>
+                    <div class="card bg-info text-white mb-4">
+                        <div class="card-body">{{ category.category }}</div>  
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{% url 'keywordCharts' %}">View Keywords</a>
+                            <a class="small text-white stretched-link" href="{% url 'keywords' category.id %}">View Keywords</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-warning text-white mb-4">
-                        <div class="card-body">경제</div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{% url 'keywordCharts' %}">View Keywords</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-success text-white mb-4">
-                        <div class="card-body">사회</div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{% url 'keywordCharts' %}">View Keywords</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="col-xl-3 col-md-6">
-                    <div class="card bg-danger text-white mb-4">
-                        <div class="card-body">Danger Card</div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="#">View Details</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div> -->
+                {% endfor %}
+                
             </div>
 
             <div class="row">
@@ -55,49 +30,6 @@
                             Number of articles
                         </div>
                         <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-chart-bar mr-1"></i>
-                            #####
-                        </div>
-                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table mr-1"></i>
-                    Articles
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">  <!--여기에 기사 list-->
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>URL</th>
-                                    <th>Published Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for article in article_list %}
-                                <tr>
-                                    <td>{{ article.name }}</td>
-                                    {% if article.category %}
-                                        <td>{{ article.category }}</td>
-                                    {% else %}
-                                        <td>None</td>
-                                    {% endif %}
-                                    <td>{{ article.url }}</td>
-                                    <td>{{ article.register_date }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

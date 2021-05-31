@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Charts</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Charts</li>
+        </ol>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead> <!-- 여기에 기사 나열!! -->
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Age</th>
+                                <th>Published Date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <!-- <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot> -->
+                        <tbody>
+                            <tr>
+                                <td>Rhona Davidson</td>
+                                <td>Tokyo</td>
+                                <td>55</td>
+                                <td>2010/10/14</td>
+                                <td>$327,900</td>
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+</main>
+{% endblock %}
