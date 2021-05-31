@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import crawling.views
+from crawling.views import CategoryKeywordsListView, index, keywords
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', crawling.views.index, name = 'index'),
-    path('keywordCharts/', crawling.views.keywordCharts, name = 'keywordCharts'),
+    path('', index, name = 'index'),
+    path('keywords/', keywords, name = 'keywords'),
+
+    path('<str:category>/keywords', CategoryKeywordsListView.as_view(), name ='keywords_list' ),
 ]
 
