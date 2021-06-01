@@ -1,5 +1,3 @@
-import json
-from django.http.response import HttpResponse
 from django.shortcuts import render
 
 # from django.urls import reverse_lazy
@@ -8,7 +6,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView  # show data
 # from django.views.generic.edit import CreateView, UpdateView, DeleteView  # add data
 
-from django.db.models.query import Prefetch
+import json
+from django.db.models import query
+# from django.db.models.query import Prefetch, QuerySet
 
 
 from .models import Article, Category
@@ -16,8 +16,8 @@ from .models import Article, Category
 
 # Create your views here.
 def index(request):
-    category_list = Category.objects.all()
-    return render(request, 'crawling/index.html', {'category_list': category_list})
+	category_list = Category.objects.all()
+	return render(request, 'crawling/index.html', {'category_list': category_list})
 
 # def keywords(request):
 #     # 기사 키워드 render
@@ -26,38 +26,53 @@ def index(request):
 
 # category 선택 시, 해당 category 의 keywords 를 보여줌!
 class CategoryDetailView(DetailView):
-    template_name = 'crawling/keywords.html' 
-    # context_object_name = 'keywords_list'  # view에서 template 에 전달할 context 변수명을 지정함
+	template_name = 'crawling/keywords.html' 
+	# context_object_name = 'keywords_list'  # view에서 template 에 전달할 context 변수명을 지정함
 
-    def get(self, request, category_id):
-        print("category_id",category_id)
-        # queryset: dict {'k1': w1, 'k2': w2, 'k3': w3, ...}
-        queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']# {{'k1': w1, 'k2': w2, 'k3': w3, ...}}
-        # querysetJson = json.dumps(queryset)
-        articles = Article.objects.prefetch_related('category').filter(category_id=category_id).order_by('register_date')
-        # == articles = Article.objects.select_related('category').filter(category_id=category_id)
-
-        # print(querysetJson)
-        # print(type(querysetJson))
-        # print(queryset)
-        # print(type(queryset))
-        print(articles)
-        
-        return render(request, self.template_name, {'keywords_list': queryset, 'articles_list': articles})
+	def get(self, request, category_id):
+		print("category_id",category_id)
+		# queryset: dict {'k1': w1, 'k2': w2, 'k3': w3, ...}
+		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
+		querysetJson = json.dumps(keywords_queryset)
+		# == articles = Article.objects.select_related('category').filter(category_id=category_id)
+		articles_queryset = Article.objects.prefetch_related('category').filter(category_id=category_id).order_by('register_date')
+		obj = articles_queryset
+		for o in obj.values():
+			if o['top_keywords'] and 'A' in o['top_keywords']:
+				print(True)
+			print(o['top_keywords'])
+		# obj = articles_queryset.filter(id=id)
+		# obj.update(
+		# 	top_keywords = ['A', 'B', 'C', 'D', 'E']
+		# )
+		# print(querysetJson)ㄴ
+		# print(type(querysetJson))
+		# print(queryset)
+		# print(type(queryset))
+		print(articles_queryset)
+		
+		return render(request, self.template_name, {'keywords_list': keywords_queryset, 'articles_list': articles_queryset, 'queryset_json': querysetJson})
 
 
 # 키워드 선택 -> 기사 나열!!  
 # prefetch_related: 역방향 참조 이용해서 해당 카테고리에 있는 article을 가져와야함.
 # category = Category.objects.prefetch_related(Prefetch('article_set'))
 # # 기사 가져올 때 해당 키워드가 있어야하는데 어떻게 구현??
-# class ArticleDetailView(DetailView):
-#     #
-#     category = Category.objects.prefetch_related(Prefetch('article_set')).filter(id=category_id)
-#     print(category)
-        # for c in category:
-        #     print(c.category)  # 정치
-#     template_name = 'crawling/articles.html'
-#     context_object_name = 'articles_list'
+class ArticleDetailView(DetailView):
+	template_name = 'crawling/articles.html'
+	# context_object_name = 'articles_list'
+
+	def get(self, request, category_id, keyword):
+		articles = Article.objects.prefetch_related('category').filter(category_id=category_id).order_by('register_date')
+		quertset = []
+		for a in articles.values():
+			if keyword in a['top_keywords']:
+				quertset.append(a)
+
+		print(quertset)
+		
+		return render(request, self.template_name, {'articles_list': quertset})
+
 
 
 
