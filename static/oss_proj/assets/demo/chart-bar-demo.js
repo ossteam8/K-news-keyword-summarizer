@@ -2,7 +2,13 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-// Bar Chart Example
+
+// escape 코드를 " 다음으로 대체함으로서 우리가 원하는 데이터 형태를 얻을 수 있음.
+var keywordsList = "{{ queryset_json|safe }}";
+console.log(keywordsList)
+for (var key in keywordsList) {
+  console.log(keywordsList[key]);
+}
 var ctx = document.getElementById("myBarChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
