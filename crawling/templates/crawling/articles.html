@@ -14,30 +14,19 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Category</th>
-                                <th>Age</th>
+                                <th>URL</th>
                                 <th>Published Date</th>
-                                <th>Salary</th>
                             </tr>
                         </thead>
-                        <!-- <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot> -->
                         <tbody>
+                            {% for article in articles_list %}
                             <tr>
-                                <td>Rhona Davidson</td>
-                                <td>Tokyo</td>
-                                <td>55</td>
-                                <td>2010/10/14</td>
-                                <td>$327,900</td>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.category }}</td>
+                                <td>{{ article.url }}</td>
+                                <td>{{ article.register_date }}</td>
                             </tr>
-                        
+                           {% endfor %}
                         </tbody>
                     </table>
                 </div>
