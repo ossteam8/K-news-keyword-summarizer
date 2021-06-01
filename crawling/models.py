@@ -43,7 +43,7 @@ class Article(models.Model):
 	summary = models.TextField(null=True, blank=True)
 	vectors = PickledObjectField(null=True, blank=True)
 	similarity = models.FloatField(null=True, blank=True)  # localize=False 일 때 NumberInput, 그 외 TextInput
-	top_keywords = PickledObjectField(null=True, blank=True)  # list
+	top_keywords = PickledObjectField( null=True, blank=True)  # list
 
 	
 	def __str__(self):
