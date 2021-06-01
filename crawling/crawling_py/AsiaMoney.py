@@ -36,9 +36,10 @@ class AsiaMoney_crawling:
         News_end = False
         while(not News_end):
             first_num = True
-            print(self.article_url)
-            req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+            
             try:
+                req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+            
                 with urlopen(req) as response:
 
                     html = response.read()
@@ -79,7 +80,7 @@ class AsiaMoney_crawling:
                             link = 'https:'+ article['href']
 
                             self.urls.append(link)
-                            print(link)
+                            #print(link)
                     except:
                         print("url 찾기 실패")
                         return
@@ -143,8 +144,9 @@ class AsiaMoney_crawling:
         
 
     def read_article_contents(self,url):
-        req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
         try:
+            req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
+        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
@@ -158,7 +160,7 @@ class AsiaMoney_crawling:
                 return text
         except:
             return ""
-    
+        
 
 
 
@@ -176,7 +178,7 @@ class AsiaMoney_crawling:
             contents = self.read_article_contents(url)
             if contents == "":
                 continue
-            print(contents)
+            #print(contents)
             self.article_info["category"] = category
             self.article_info["contents"] = contents
             self.article_info["title"] = title

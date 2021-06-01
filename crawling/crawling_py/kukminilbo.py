@@ -36,72 +36,74 @@ class Kukmin_crawling:
         News_end = False
 
         while(not News_end):
-            print(self.article_url)
-            with urllib.request.urlopen(self.article_url) as response:
-                
-                html = response.read()
-                soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
-                
-                #기사의 url들을 파싱하는 부분
-            
+            try:
+                with urllib.request.urlopen(self.article_url) as response:
 
-                article_list = soup.find("div",{"id":"container"})
-                #article_list = article_list.find("div",{"id":"contents"})# 안된다면 이부분을 넣자
-                article_list = article_list.find("div",{"class":"nws_list"})
-                
-                
-                try:
-                    article_list = article_list.find_all("div",{"class":"nws"})
-                    
-                except:
-                    self.check_valid=False
-                    print("리스트 읽어오기 실패")
-                    return    
-                   
-                try:
-                    for article in article_list:
-                        link =  article.find("a")
-                        link = "http://news.kmib.co.kr/article/"+link['href']
-                        self.urls.append(link)
-                        print(link)
-                except:
-                    print("url 찾기 실패")
-                    return
-                
-                #try:
-                next_url = ""
+                    html = response.read()
+                    soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
 
-                pages = soup.find("div",{"id":"container"})
-                pages = pages.find("div",{"class":"paging"})
-                current_page = pages.find("strong").string  # 현재 페이지 찾음
-                print(current_page)
-                next_button = pages.find("a",{"class":"next"})
-                
-                #next_button = pages.find("a",{"class":"btn_next"})
-                pages = pages.find_all("a")
-                try:
-                    #print(pages)
-                    for page in pages:
-                        
-                        if page.string!=None:
+                    #기사의 url들을 파싱하는 부분
+
+
+                    article_list = soup.find("div",{"id":"container"})
+                    #article_list = article_list.find("div",{"id":"contents"})# 안된다면 이부분을 넣자
+                    article_list = article_list.find("div",{"class":"nws_list"})
+
+
+                    try:
+                        article_list = article_list.find_all("div",{"class":"nws"})
+
+                    except:
+                        self.check_valid=False
+                        print("리스트 읽어오기 실패")
+                        return    
+
+                    try:
+                        for article in article_list:
+                            link =  article.find("a")
+                            link = "http://news.kmib.co.kr/article/"+link['href']
+                            self.urls.append(link)
                             
-                            if(int(current_page)<int(page.string)):
-                                next_url = page['href']
-                                
-                                break
-                    if(next_url!=""):
-                        pass
-                    else: #다음 화살표 누르기
-                        try:
-                            next_url = next_button['href']
-                        except:
-                            News_end = True
-                    if(not News_end):
-                        self.article_url = "http://news.kmib.co.kr/article/"+next_url
-                        print("new article" + self.article_url)
-                except:
-                    print("페이지 이동 실패")
-                    return
+                    except:
+                        print("url 찾기 실패")
+                        return
+
+                    #try:
+                    next_url = ""
+
+                    pages = soup.find("div",{"id":"container"})
+                    pages = pages.find("div",{"class":"paging"})
+                    current_page = pages.find("strong").string  # 현재 페이지 찾음
+
+                    next_button = pages.find("a",{"class":"next"})
+
+                    #next_button = pages.find("a",{"class":"btn_next"})
+                    pages = pages.find_all("a")
+                    try:
+                        #print(pages)
+                        for page in pages:
+
+                            if page.string!=None:
+
+                                if(int(current_page)<int(page.string)):
+                                    next_url = page['href']
+
+                                    break
+                        if(next_url!=""):
+                            pass
+                        else: #다음 화살표 누르기
+                            try:
+                                next_url = next_button['href']
+                            except:
+                                News_end = True
+                        if(not News_end):
+                            self.article_url = "http://news.kmib.co.kr/article/"+next_url
+                            
+                    except:
+                        print("페이지 이동 실패")
+                        return
+            except:
+                return
 
 
 
@@ -124,17 +126,20 @@ class Kukmin_crawling:
         
 
     def read_article_contents(self,url):
-        with urllib.request.urlopen(url) as response:
-            html = response.read()
-            soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
-            article_contents = soup.find("div",{"id":"articleBody"})
-            text = ""
-            try:
-                text = text + ' '+ article_contents.get_text(' ', strip=True)
-            except:
-                print("error" , url)
+        try:
+            with urllib.request.urlopen(url) as response:
+                html = response.read()
+                soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
+                article_contents = soup.find("div",{"id":"articleBody"})
+                text = ""
+                try:
+                    text = text + ' '+ article_contents.get_text(' ', strip=True)
+                except:
+                    print("error" , url)
 
-            return text
+                return text
+        except:
+            return ""
     
 
 
@@ -151,8 +156,7 @@ class Kukmin_crawling:
             title = article.title
             #print(title)
             contents = self.read_article_contents(url)
-            #print(contents)
-            print(category)
+
             self.article_info["category"] = category
             self.article_info["contents"] = contents
             self.article_info["title"] = title

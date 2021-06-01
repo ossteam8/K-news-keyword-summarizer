@@ -37,9 +37,9 @@ class Donga_crawling:
         News_end = False
 
         while(not News_end):
-            print(self.article_url)
-            req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
             try:
+                req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+            
                 with urlopen(req) as response:
                 
                     html = response.read()
@@ -64,7 +64,7 @@ class Donga_crawling:
                         for article in article_list:
                             link = article.find("a")
                             self.urls.append(link['href'])
-                            print(link['href'])
+                          #  print(link['href'])
                     except:
                         print("url 찾기 실패")
                         return
@@ -136,8 +136,9 @@ class Donga_crawling:
         
 
     def read_article_contents(self,url):
-        req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
         try:
+            req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
+        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
@@ -165,11 +166,10 @@ class Donga_crawling:
             g = Goose({'stopwords_class':StopWordsKorean})
             article = g.extract(url=url)
             title = article.title
-            print(title)
             contents = self.read_article_contents(url)
             if contents =="":
                 continue
-            print(contents)
+
             self.article_info["category"] = category
             self.article_info["contents"] = contents
             self.article_info["title"] = title

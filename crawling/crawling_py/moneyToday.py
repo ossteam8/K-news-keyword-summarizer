@@ -38,9 +38,9 @@ class MoneyToday_crawling:
         before_one_week = now-relativedelta(days=1) # 여기서 days값이 몇일전을의미 테스트용으론 1이 적당
         before_one_week =  self.get_date(before_one_week) # 일주 전을 의미
         while(not News_end):
-            print(self.article_url)
-            req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
             try:
+                req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+            
                 with urlopen(req) as response:
                 
                     html = response.read()
@@ -73,14 +73,14 @@ class MoneyToday_crawling:
                                 article_time = i
 
                             article_time = self.get_date(article_time)
-                            print(article_time)
+                            
                             if(int(article_time)<int(before_one_week)): # 내가 원하는 요일까지의 자료만 필요하다
                                 return 
 
                             link = article.find("a")
                             link = link['href']
                             self.urls.append(link)
-                            print(link)
+                            #print(link)
                     except:
                         print("url 찾기 실패")
                         return
@@ -112,7 +112,7 @@ class MoneyToday_crawling:
                             next_url = next_url[26:]
                             next_url = next_url[:len(next_url)-2]
                         if(not News_end):
-                            print(next_url)
+
                             self.article_url = "https://news.mt.co.kr"+next_url
                     except:
                         print("페이지 이동 실패")
@@ -141,8 +141,9 @@ class MoneyToday_crawling:
         
 
     def read_article_contents(self,url):
-        req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
         try:
+            req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
+        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
@@ -173,7 +174,7 @@ class MoneyToday_crawling:
             contents = self.read_article_contents(url)
             if contents == "":
                 continue
-            print(contents)
+
             self.article_info["category"] = category
             self.article_info["contents"] = contents
             self.article_info["title"] = title

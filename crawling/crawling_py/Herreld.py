@@ -37,83 +37,84 @@ class Herald_crawling:
         News_end = False
 
         while(not News_end):
-            print(self.article_url)
+            
             now = datetime.now()
             before_one_week = now-relativedelta(days=1) # 여기서 days값이 몇일전을의미 테스트용으론 1이 적당
             before_one_week =  self.get_date(before_one_week) # 일주 전을 의미
-            req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
-            with urlopen(req) as response:
-                
-                html = response.read()
-                soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
-                
-                #기사의 url들을 파싱하는 부분
-            
+            try:
+                req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+                with urlopen(req) as response:
 
-                article_list = soup.find("div",{"class":"list_wrap"})
-                #article_list = article_list.find("div",{"id":"content"})# 안된다면 이부분을 넣자
-                article_list = article_list.find("div",{"class":"list_l"})
+                    html = response.read()
+                    soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
 
-                
-                try:
-                    article_list = article_list.find("div",{"class":"list"})
-                    article_list = article_list.find("ul")
-                    article_list = article_list.find_all("li")
-                    
-                except:
-                    self.check_valid=False
-                    print("리스트 읽어오기 끝")
-                    return    
-                   
-                try:
-                    for article in article_list:
-                        article_time = article.find("div",{"class":"l_date"}).string
-                        article_time = self.get_date(article_time)
-                        if(int(article_time)<int(before_one_week)):
-                            return
-                        
+                    #기사의 url들을 파싱하는 부분
 
-                        link =  article.find("a")
-                        link = "http://biz.heraldcorp.com/"+link['href']
-                        self.urls.append(link)
-                        print(link)
-                except:
-                    print("url 찾기 실패")
-                    return
-                
-                try:
-                    next_url = ""
 
-                    #pages = soup.find("div",{"class":"list_l"})
-                    pages = soup.find("div",{"class":"page_wrap"})
-                    current_page = pages.find("a",{"class":"active"}).string  # 현재 페이지 찾음
-                    print(current_page)
-                    next_button = pages.find("a",{"class":"next"})
+                    article_list = soup.find("div",{"class":"list_wrap"})
+                    #article_list = article_list.find("div",{"id":"content"})# 안된다면 이부분을 넣자
+                    article_list = article_list.find("div",{"class":"list_l"})
 
-                    #next_button = pages.find("a",{"class":"btn_next"})
-                    pages = pages.find_all("a")
-                
 
-                    for page in pages:
-                        if page.string!=None:
-                            
-                            if(int(current_page)<int(page.string)):
-                                next_url = page['href']
-                                
-                                break
-                    if(next_url!=""):
-                        pass
-                    else: #다음 화살표 누르기
-                        try:
-                            next_url = next_button['href']
-                        except:
-                            News_end = True
-                    if(not News_end):
-                        self.article_url = "http://biz.heraldcorp.com/"+next_url
-                        print("new article" + self.article_url)
-                except:
-                    print("페이지 이동 실패")
-                    return
+                    try:
+                        article_list = article_list.find("div",{"class":"list"})
+                        article_list = article_list.find("ul")
+                        article_list = article_list.find_all("li")
+
+                    except:
+                        self.check_valid=False
+                        print("리스트 읽어오기 끝")
+                        return    
+
+                    try:
+                        for article in article_list:
+                            article_time = article.find("div",{"class":"l_date"}).string
+                            article_time = self.get_date(article_time)
+                            if(int(article_time)<int(before_one_week)):
+                                return
+
+
+                            link =  article.find("a")
+                            link = "http://biz.heraldcorp.com/"+link['href']
+                            self.urls.append(link)
+
+                    except:
+                        print("url 찾기 실패")
+                        return
+
+                    try:
+                        next_url = ""
+
+                        #pages = soup.find("div",{"class":"list_l"})
+                        pages = soup.find("div",{"class":"page_wrap"})
+                        current_page = pages.find("a",{"class":"active"}).string  # 현재 페이지 찾음
+                        next_button = pages.find("a",{"class":"next"})
+
+                        #next_button = pages.find("a",{"class":"btn_next"})
+                        pages = pages.find_all("a")
+
+
+                        for page in pages:
+                            if page.string!=None:
+
+                                if(int(current_page)<int(page.string)):
+                                    next_url = page['href']
+
+                                    break
+                        if(next_url!=""):
+                            pass
+                        else: #다음 화살표 누르기
+                            try:
+                                next_url = next_button['href']
+                            except:
+                                News_end = True
+                        if(not News_end):
+                            self.article_url = "http://biz.heraldcorp.com/"+next_url
+                    except:
+                        print("페이지 이동 실패")
+                        return
+            except:
+                return
 
 
 
@@ -134,9 +135,9 @@ class Herald_crawling:
         
 
     def read_article_contents(self,url):
-
-        req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
         try:
+            req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
+        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')

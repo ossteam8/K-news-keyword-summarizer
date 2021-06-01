@@ -38,12 +38,13 @@ class YTN_crawling:
         News_end = False
 
         while(not News_end):
-            print(self.article_url)
+            # print(self.article_url)
             now = datetime.now()
             before_one_week = now-relativedelta(days=1) # 여기서 days값이 몇일전을의미 테스트용으론 1이 적당
             before_one_week =  self.get_date(before_one_week) # 일주 전을 의미
-            req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
             try:
+                req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+            
                 with urlopen(req) as response:
                 
                     html = response.read()
@@ -63,7 +64,7 @@ class YTN_crawling:
                             return
                         link = first_article.find("a")
                         link = link['href']
-                        print(link)
+                        
                         self.urls.append(link)
                     except:
                         pass
@@ -88,7 +89,7 @@ class YTN_crawling:
                             link =  article.find("a")
                             link = link['href']
                             self.urls.append(link)
-                            print(link)
+                            
                     except:
                         print("url 찾기 실패")
                         return
@@ -99,7 +100,7 @@ class YTN_crawling:
                         pages = soup.find("div",{"class":"page"})
                         #pages = pages.find("div",{"class":"page_wrap"})
                         current_page = pages.find("a",{"class":"now"}).string  # 현재 페이지 찾음
-                        print(current_page)
+                        
                         next_button = pages.find("a",{"class":"next"})
     
                         #next_button = pages.find("a",{"class":"btn_next"})
@@ -122,7 +123,7 @@ class YTN_crawling:
                                 News_end = True
                         if(not News_end):
                             self.article_url = "https://www.ytn.co.kr/news/"+next_url
-                            print("new article" + self.article_url)
+                            # print("new article" + self.article_url)
                     except:
                         print("페이지 이동 실패")
                         return
@@ -148,8 +149,9 @@ class YTN_crawling:
         
 
     def read_article_contents(self,url):
-        req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
         try:
+            req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
+        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
@@ -180,7 +182,7 @@ class YTN_crawling:
                 contents = self.read_article_contents(url)
                 if contents == "":
                     continue
-                print(contents)
+                # print(contents)
                 self.article_info["category"] = category
                 self.article_info["contents"] = contents
                 self.article_info["title"] = title

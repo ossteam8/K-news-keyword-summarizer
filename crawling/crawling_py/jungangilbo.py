@@ -38,9 +38,9 @@ class Jungang_crawling:
         before_one_week = now-relativedelta(days=1) # 여기서 days값이 몇일전을의미 테스트용으론 1이 적당
         before_one_week =  self.get_date(before_one_week) # 일주 전을 의미
         while(not News_end):
-            print(self.article_url)
-            req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
             try:
+                req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
+            
                 with urlopen(req) as response:
                 
                     html = response.read()
@@ -62,7 +62,6 @@ class Jungang_crawling:
 
                             link = article.find("a")
                             self.urls.append(link['href'])
-                            print(link['href'])
                     except:
                         print("error1")
                         return
@@ -122,7 +121,7 @@ class Jungang_crawling:
     def searching_category(self,searching):
         title = urllib.parse.quote(searching)
         self.article_url = "https://news.joins.com/Search/JoongangNews?Keyword="+title+"&SortType=New&SearchCategoryType=JoongangNews&PeriodType=OneWeek&ScopeType=All&ImageType=All&JplusType=All&BlogType=All&ImageSearchType=Image&TotalCount=0&StartCount=0&IsChosung=False&IssueCategoryType=All&IsDuplicate=True&Page=1&PageSize=10&IsNeedTotalCount=True"
-        print(self.article_url)
+        
         self.crawling()
         
     # def searching_category_crawling(self,searching,category):
