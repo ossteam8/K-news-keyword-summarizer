@@ -22,7 +22,7 @@ urlpatterns = [
     path('', index, name = 'index'),
     # path('search/', SearchFormView.as_view(), name='search'),
 
-    path('keywords/<int:category_id>', CategoryDetailView.as_view(), name='keywords'),
-    # path('keywords/<int:category_id>/<str:keyword>', ArticleDetailView.as_view(), name='article_detail')
+    path('<int:category_id>/keywords', CategoryDetailView.as_view(), name='keywords'),
+    # path('<int:category_id>/keywords/<str:keyword>', ArticleDetailView.as_view(), name='article_detail')
 ]
 
