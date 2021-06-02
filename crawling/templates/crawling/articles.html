@@ -22,8 +22,9 @@
                             {% for article in articles_list %}
                             <tr>
                                 <td>{{ article.title }}</td>
+                                <!-- <td><a href="#">{{ article.title }}</a></td> -->
                                 <td>{{ article.category }}</td>
-                                <td>{{ article.url }}</td>
+                                <td><a href="{{ article.url }}">{{ article.url }}</a></td>
                                 <td>{{ article.register_date }}</td>
                             </tr>
                            {% endfor %}

@@ -8,22 +8,12 @@
                 <li class="breadcrumb-item active">Charts</li>
             </ol>
             <div class="card mb-4" id="keywords" value="{{ keywords_list }}">
-                {% for keyword in keywords_list %}
-                <div class="card-body">  {{ keyword }}
-                    Chart.js is a third party plugin that is used to generate the charts in this template. The charts below have been customized - for further customization options, please visit the official
-                    <a target="_blank" href="https://www.chartjs.org/docs/latest/">Chart.js documentation</a>
-                    
+                {% for keyword, weight in keywords_list.items %}
+                <div class="card-body"><a href="{% url 'article_list' category_id keyword %}">{{ keyword }}, {{ weight }}</a>
                 </div>
                 {% endfor %}
             </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-area mr-1"></i>
-                    Number of articles
-                </div>
-                <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-            </div>
+            
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card mb-4">
@@ -56,9 +46,6 @@
             </ol>
             <div class="card mb-4">
                 <div class="card-body">
-                    DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                    .
                 </div>
             </div>
             <div class="card mb-4">
@@ -82,35 +69,12 @@
                                 {% for article in articles_list %}
                                 <tr>
                                     <td>{{ article.title }}</td>
+                                    <!-- <td><a href="#">{{ article.title }}</a></td> -->
                                     <td>{{ article.category }}</td>
                                     <td><a href="{{ article.url }}">{{ article.url }}</a></td>
                                     <td>{{ article.register_date }}</td>
                                 </tr>
                                {% endfor %}
-                               <!-- {% for article in articles_list %}
-                                <tr>
-                                    <td>{{ article.title }}</td>
-                                    <td>{{ article.category }}</td>
-                                    <td><a href="{{ article.url }}">{{ article.url }}</a></td>
-                                    <td>{{ article.register_date }}</td>
-                                </tr>
-                               {% endfor %}
-                               {% for article in articles_list %}
-                                <tr>
-                                    <td>{{ article.title }}</td>
-                                    <td>{{ article.category }}</td>
-                                    <td><a href="{{ article.url }}">{{ article.url }}</a></td>
-                                    <td>{{ article.register_date }}</td>
-                                </tr>
-                               {% endfor %}
-                               {% for article in articles_list %}
-                                <tr>
-                                    <td>{{ article.title }}</td>
-                                    <td>{{ article.category }}</td>
-                                    <td><a href="{{ article.url }}">{{ article.url }}</a></td>
-                                    <td>{{ article.register_date }}</td>
-                                </tr>
-                               {% endfor %} -->
                             </tbody>
                         </table>
                     </div>
