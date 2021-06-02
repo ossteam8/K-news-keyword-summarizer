@@ -4,7 +4,7 @@ from goose3 import Goose
 # meta tag의 property의 article:section을 파싱하기 위한 클래스
 class Parse_category:
     def __init__(self,url):
-        req = requests.get(url)
+        req = requests.get(url, verify=False)
         self.raw = req.text
         self.category_names = ["정치","사회","경제"]
         self.policy = ["정치"] # 후에 정치 서브 카테고리를 채우자
