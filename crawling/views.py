@@ -3,12 +3,9 @@ from django.shortcuts import render
 # from django.urls import reverse_lazy
 # Generic View는 정해진 것을 사용하기 때문에 쉽지만 정해진 규약이 많다
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView  # show data
-# from django.views.generic.edit import CreateView, UpdateView, DeleteView  # add data
+from django.views.generic.detail import DetailView 
 
 import json
-from django.db.models import query
-# from django.db.models.query import Prefetch, QuerySet
 import datetime
 from itertools import zip_longest
 
@@ -33,30 +30,37 @@ class CategoryDetailView(DetailView):
 		# == articles = Article.objects.select_related('category').filter(category_id=category_id)
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
 		articles_queryset = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
-		# obj = articles_queryset.filter(id=id)
-		# obj.update(
-		# 	top_keywords = ['A', 'B', 'C', 'D', 'E']
-		# )
+		
 		print(articles_queryset)
 		
-		return render(request, self.template_name, {'keywords_list': keywords_queryset, 'articles_list': articles_queryset, 'queryset_json': querysetJson})
+		return render(request, self.template_name, {'category_id': category_id, 'keywords_list': keywords_queryset, 'articles_list': articles_queryset, 'queryset_json': querysetJson})
 
 
 # 키워드 선택 -> 기사 나열!!  
 # prefetch_related: 역방향 참조 이용해서 해당 카테고리에 있는 article을 가져와야함.
 # 기사 가져올 때 해당 키워드가 있어야 함
-class ArticleDetailView(DetailView):
+class ArticleListView(ListView):
 	template_name = 'crawling/articles.html'
 
-	def get(self, request, category_id, keyword):
+	def get(self, request, category_id, keyword):  # type(keyword): str
+		print("category_id2",category_id)
+		
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
 		articles = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
+		# 모든 article object에 update!!c
+		# obj = Article.objects.all()
+		# obj.update(
+    	# 	top_keywords = ['k1', 'k2', 'k3', 'k4', 'k5'] 
+		# )
 		queryset = []
-		for a in articles.values():
-			if keyword in a['top_keywords']:
-				queryset.append(a)  # 해당 키워드를 top_keywords에 포함하고 있는 객체만 append
-
+		for k, o in zip(list(articles.values('top_keywords')), articles):
+			if k['top_keywords'] and keyword in k['top_keywords']:
+				queryset.append(o)  # 해당 키워드를 top_keywords에 포함하고 있는 객체만 append
 		print(queryset)
+
+		# similarity 순으로 정렬
+
+
 		# top_keyword
 		# obj = articles_queryset
 		# for o in obj.values():
@@ -69,7 +73,7 @@ class ArticleDetailView(DetailView):
 
 
 # summary 화면
-# class SummaryView(DetailView):
+# class ArticleDetailView(DetailView):
 #     # id = article id !! (pk)
 #     queryset = Article.objects.filter(pk=id)
 #     template_name = '.html'
@@ -102,4 +106,4 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 		if society:
 			Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
 
-	
+
