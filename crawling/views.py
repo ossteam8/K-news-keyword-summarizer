@@ -69,7 +69,7 @@ class ArticleDetailView(DetailView):
 
 
 # summary 화면
-# class ArticleDetailView(DetailView):
+# class SummaryView(DetailView):
 #     # id = article id !! (pk)
 #     queryset = Article.objects.filter(pk=id)
 #     template_name = '.html'
@@ -93,19 +93,6 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 	politic_object = Category.objects.filter(category='정치').first()
 	economy_object = Category.objects.filter(category='경제').first()
 	society_object = Category.objects.filter(category='사회').first()
-	# for politic in politic_article_list:
-	# 	# article save
-	# 	print(politic)
-	# 	# for p in politic:
-	# 	Article.objects.create(title=politic['title'], contents=politic['contents'], url=politic['url'], category=politic_object)
-	
-	# for economy in economy_article_list:
-	# 	# article save
-	# 	Article.objects.create(title=economy['title'], contents=economy['contents'], url=economy['url'], category=economy_object)
-
-	# for society in society_article_list:
-	# 	# article save
-	# 	Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
 
 	for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
 		if politic:
@@ -115,3 +102,4 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 		if society:
 			Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
 
+	
