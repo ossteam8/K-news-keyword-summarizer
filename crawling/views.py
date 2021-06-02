@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.shortcuts import render
 
 # from django.urls import reverse_lazy
@@ -13,9 +14,20 @@ from .models import Article, Category
 
 
 # Create your views here.
-def index(request):
-	category_list = Category.objects.all()
-	return render(request, 'crawling/index.html', {'category_list': category_list})
+# def index(request):
+	
+class CategoryListView(ListView):
+	template_name = 'crawling/index.html' 
+	
+	def get(self, request):
+		category_list = Category.objects.all()
+
+		num_of_articles = {}
+		for i in range(7):
+			week_date = datetime.datetime.now() - datetime.timedelta(days=i)
+			articles = Article.objects.filter(register_date__date=week_date).order_by('register_date')
+			num_of_articles[str(i+1)] = articles.count()
+		return render(request, self.template_name, {'category_list': category_list})
 
 
 # category 선택 시, 해당 category 의 keywords 를 보여줌!
@@ -58,6 +70,7 @@ class ArticleListView(ListView):
 				queryset.append(o)  # 해당 키워드를 top_keywords에 포함하고 있는 객체만 append
 		print(queryset)
 
+		# ===========================
 		# similarity 순으로 정렬
 
 
@@ -105,5 +118,3 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 			Article.objects.create(title=economy['title'], contents=economy['contents'], url=economy['url'], category=economy_object)
 		if society:
 			Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
-
-
