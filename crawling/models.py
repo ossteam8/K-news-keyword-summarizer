@@ -1,7 +1,7 @@
 from django.db import models
 from picklefield.fields import PickledObjectField
 
-#   memo = JSONField(default={}, dump_kwargs={'ensure_ascii': False})s
+#   memo = JSONField(default={}, dump_kwargs={'ensure_ascii': False})
 
 
 # Create your models here.
@@ -15,8 +15,6 @@ class Category(models.Model):
 
 	class Meta:
 		db_table = 'category'
-
-# politic, economic, social
 
 
 class SearchWord(models.Model):
@@ -41,8 +39,8 @@ class Article(models.Model):
 	register_date = models.DateTimeField(auto_now_add=True)  # public date
 
 	summary = models.TextField(null=True, blank=True)
-	vectors = PickledObjectField(null=True, blank=True)
-	similarity = models.FloatField(null=True, blank=True)  # localize=False 일 때 NumberInput, 그 외 TextInput
+	# vectors = PickledObjectField(null=True, blank=True)
+	# similarity = models.FloatField(null=True, blank=True)  # localize=False 일 때 NumberInput, 그 외 TextInput
 	top_keywords = PickledObjectField( null=True, blank=True)  # list
 
 	

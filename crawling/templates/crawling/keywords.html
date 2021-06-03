@@ -8,10 +8,10 @@
                 <li class="breadcrumb-item active">Charts</li>
             </ol>
             <div class="card mb-4" id="keywords" value="{{ keywords_list }}">
-                {% for keyword, weight in keywords_list.items %}
+                <!-- {% for keyword, weight in keywords_list.items %}
                 <div class="card-body"><a href="{% url 'article_list' category_id keyword %}">{{ keyword }}, {{ weight }}</a>
                 </div>
-                {% endfor %}
+                {% endfor %} -->
             </div>
             
             <div class="row">
@@ -83,5 +83,118 @@
         </div>
 
     </main>
-{% endblock %}
+    {% load static %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'oss_proj/js/scripts.js' %}"></script>
+    <script type="text/javascript">
+    // Set new default font family and font color to mimic Bootstrap's default styling
+        var keywordset = JSON.parse('{{queryset_json|safe}}');
+        // for( keys in keywrodset){
+        //     console.log(keys + ": " + keywrodset[keys])
+        // }
+        var key_list = [];
+        var data_list = [];
+        for(keys in keywordset){
+            key_list.push(keys);
+            data_list.push(keywordset[keys]);
+        }
 
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+
+
+        // escape 코드를 " 다음으로 대체함으로서 우리가 원하는 데이터 형태를 얻을 수 있음.
+        var ctx = document.getElementById("myBarChart");
+        var myLineChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+             labels: key_list,
+             //["keyword_1", "keyword_2", "keyword_3", "keyword_4", "keyword_5", "keyword_6"],  // 카테고리에 기반한 키워드 종류 (10개? 정도)
+            datasets: [{
+            //   label: "Revenue",
+              backgroundColor: "rgba(2,117,216,1)",
+              borderColor: "rgba(2,117,216,1)",
+              data: data_list,  // keyword 가중치!
+            }],
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                time: {
+                  unit: 'month'
+                },
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  maxTicksLimit: 10
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  min: 0,
+                  max: 1,
+                  maxTicksLimit: 10
+                },
+                gridLines: {
+                  display: true
+                }
+              }],
+            },
+            legend: {
+              display: false
+            },
+
+          }
+        });
+
+        ctx.addEventListener('click',function(evt){
+            var firstPoint = myLineChart.getElementAtEvent(evt)[0];
+            if(firstPoint){
+                var category_id = "{{category_id}}";
+                var label = myLineChart.data.labels[firstPoint._index];
+                // var value = myLineChart.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
+                // alert(label);
+                location.href = "/articles/"+category_id+"/"+label;
+            }
+        });
+        
+    </script>
+
+
+    <!-- <script src="{% static 'oss_proj/assets/demo/chart-area-demo.js' %}"></script> -->
+    <!-- <script src="{% static 'oss_proj/assets/demo/chart-bar-demo.js' %}"></script> -->
+    <!-- <script src="{% static 'oss_proj/assets/demo/chart-pie-demo.js' %}"></script> -->
+    <script type="text/javascript">
+    // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+
+        // Pie Chart Example
+        var keywordset = JSON.parse('{{queryset_json|safe}}');
+        var key_list = [];
+        var data_list = [];
+        for(keys in keywordset){
+            key_list.push(keys);
+            data_list.push(keywordset[keys]);
+        }
+        var ctb = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctb, {
+          type: 'pie',
+          data: {
+            labels: key_list,
+            datasets: [{
+              data: data_list,
+              backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#000000','#FFA500','#9900CC','#66CCFF','#99FFCC'],
+            }],
+          },
+        });
+
+    </script>
+    <script src="{% static 'oss_proj/assets/demo/datatables-demo.js' %}"></script>
+{% endblock %}

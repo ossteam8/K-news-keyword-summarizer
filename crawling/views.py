@@ -21,7 +21,6 @@ class CategoryListView(ListView):
 	
 	def get(self, request):
 		category_list = Category.objects.all()
-
 		num_of_articles = {}
 		for i in range(7):
 			week_date = datetime.datetime.now() - datetime.timedelta(days=i)
@@ -36,6 +35,8 @@ class CategoryDetailView(DetailView):
 
 	def get(self, request, category_id):
 		print("category_id",category_id)
+		category = Category.objects.filter(id=category_id).values('category')[0]['category']
+
 		# queryset: dict {'k1': w1, 'k2': w2, 'k3': w3, ...}
 		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
 		querysetJson = json.dumps(keywords_queryset)
@@ -45,7 +46,7 @@ class CategoryDetailView(DetailView):
 		
 		print(articles_queryset)
 		
-		return render(request, self.template_name, {'category_id': category_id, 'keywords_list': keywords_queryset, 'articles_list': articles_queryset, 'queryset_json': querysetJson})
+		return render(request, self.template_name, {'category_id': category_id, 'category': category, 'keywords_list': keywords_queryset, 'articles_list': articles_queryset, 'queryset_json': querysetJson})
 
 
 # 키워드 선택 -> 기사 나열!!  
@@ -56,33 +57,28 @@ class ArticleListView(ListView):
 
 	def get(self, request, category_id, keyword):  # type(keyword): str
 		print("category_id2",category_id)
+		category = Category.objects.filter(id=category_id).values('category')[0]['category']
 		
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
 		articles = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
-		# 모든 article object에 update!!c
+		# 모든 article object에 update!!
 		# obj = Article.objects.all()
 		# obj.update(
-    	# 	top_keywords = ['k1', 'k2', 'k3', 'k4', 'k5'] 
+    	# 	top_keywords = {1 : ['k1', 'k2', 'k3', 'k4', 'k5'], 2 : ['k6', 'k7', 'k8', 'k9', 'k10']}
 		# )
+		# { 1 : ['keyword1', 'keyword2', , ,], 2 : ['keyword1', 'keyword2', , ,], }
 		queryset = []
-		for k, o in zip(list(articles.values('top_keywords')), articles):
-			if k['top_keywords'] and keyword in k['top_keywords']:
+		print(list(articles.values('top_keywords')))
+		for k, o in zip_longest(list(articles.values('top_keywords')), articles):
+			# top_keywords = list(articles.values('top_keywords'))
+			# print(top_keywords)
+			print(k['top_keywords'].values())
+			if k['top_keywords'].values() and keyword in k['top_keywords'].values():
 				queryset.append(o)  # 해당 키워드를 top_keywords에 포함하고 있는 객체만 append
-		print(queryset)
+				print("queryset",queryset)
+				continue
 
-		# ===========================
-		# similarity 순으로 정렬
-
-
-		# top_keyword
-		# obj = articles_queryset
-		# for o in obj.values():
-		# 	if o['top_keywords'] and 'A' in o['top_keywords']:
-		# 		print(True)
-		# 	print(o['top_keywords'])
-		
-		
-		return render(request, self.template_name, {'articles_list': queryset})
+		return render(request, self.template_name, {'articles_list': queryset, 'category': category, 'keyword': keyword})
 
 
 # summary 화면
@@ -92,17 +88,6 @@ class ArticleListView(ListView):
 #     template_name = '.html'
 #     context_object_name = 'article'
 
-
-# 일주일 기사만 가져오기
-# def date_view(self, request):
-#         week_date = datetime.datetime.now() - datetime.timedelta(days=7)
-#         week_data = Article.objects.filter(register_date__gte=week_date)
-#         data = Order.objects.filter(register_date__lt=week_date)
-#         context = dict(
-#             self.admin_site.each_context(request),
-#             week_data=week_data,
-#             data=data,
-#         )
 
 
 # crontab 에서 실행한 함수에서 save_articles()로 article list 넘겨줌

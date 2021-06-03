@@ -22,6 +22,6 @@ urlpatterns = [
     path('', CategoryListView.as_view(), name = 'index'),
 
     path('keywords/<int:category_id>', CategoryDetailView.as_view(), name='category_keywords'),
-    path('keywords/<int:category_id>/<keyword>', ArticleListView.as_view(), name='article_list'),  # (?P<keyword>[\w-]+)/$
+    path('articles/<int:category_id>/<keyword>', ArticleListView.as_view(), name='article_list'),  # (?P<keyword>[\w-]+)/$
 ]
 
