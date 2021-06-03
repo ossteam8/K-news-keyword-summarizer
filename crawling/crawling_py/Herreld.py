@@ -70,6 +70,8 @@ class Herald_crawling:
                         for article in article_list:
                             article_time = article.find("div",{"class":"l_date"}).string
                             article_time = self.get_date(article_time)
+                            if(int(article_time)>int(before_one_week)):
+                                continue
                             if(int(article_time)<int(before_one_week)):
                                 return
 
@@ -161,10 +163,12 @@ class Herald_crawling:
         for url in self.urls:
 
             category = self.categories[self.choose_category-1]
-
-            g = Goose({'stopwords_class':StopWordsKorean})
-            article = g.extract(url=url)
-            title = article.title
+            try:
+                g = Goose({'stopwords_class':StopWordsKorean})
+                article = g.extract(url=url)
+                title = article.title
+            except:
+                continue
             #print(title)
             contents = self.read_article_contents(url)
             if contents == "":

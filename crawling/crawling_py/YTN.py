@@ -10,7 +10,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from .categoryparser import Parse_category
+# from .categoryparser import Parse_category
 from urllib.request import Request, urlopen
 
 
@@ -82,6 +82,8 @@ class YTN_crawling:
                         for article in article_list:
                             article_time = article.find("span",{"class":"date"}).string
                             article_time = self.get_date(article_time)
+                            if(int(article_time)>int(before_one_week)):
+                                continue
                             if(int(article_time)<int(before_one_week)):
                                 return
 

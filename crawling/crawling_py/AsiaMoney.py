@@ -170,10 +170,12 @@ class AsiaMoney_crawling:
         for url in self.urls:
 
             category = self.categories[self.choose_category-1]
-
-            g = Goose({'stopwords_class':StopWordsKorean})
-            article = g.extract(url=url)
-            title = article.title
+            try:
+                g = Goose({'stopwords_class':StopWordsKorean})
+                article = g.extract(url=url)
+                title = article.title
+            except:
+                continue
             #print(title)
             contents = self.read_article_contents(url)
             if contents == "":

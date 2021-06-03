@@ -10,7 +10,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from .categoryparser import Parse_category
+
 from urllib.request import Request, urlopen
 class Jungang_crawling:
     #type = 1: 카테고리만 입력
@@ -57,6 +57,8 @@ class Jungang_crawling:
                             #if(self.type==1): # 카테고리만 일때만 이것을 시행
                             article_time = article.find("span",{"class":"byline"}).string # 날짜를 읽어옴
                             article_time = self.get_date(article_time)
+                            if(int(article_time)>int(before_one_week)):
+                                continue
                             if(int(article_time)<int(before_one_week)): # 일주 전까지의 자료만 필요하다
                                 return 
 
@@ -134,8 +136,9 @@ class Jungang_crawling:
 
 
     def read_article_contents(self,url):
-        req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
         try:
+            req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
+        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
@@ -160,9 +163,12 @@ class Jungang_crawling:
             
             checkc = True
             category = self.categories[self.choose_category-1]
-            g = Goose({'stopwords_class':StopWordsKorean})
-            article = g.extract(url=url)
-            title = article.title
+            try:
+                g = Goose({'stopwords_class':StopWordsKorean})
+                article = g.extract(url=url)
+                title = article.title
+            except:
+                continue
             #print(title)
             contents = self.read_article_contents(url)
             if(contents==""):
@@ -185,7 +191,7 @@ if __name__ == "__main__":
 
     A = Jungang_crawling()
     A.category_crawling(2)
-    ll = A.get_news(2)
+    ll = A.get_news(3)
     print(len(ll))
     print(A.num_article)
     # A = jungang_crawling(2)
