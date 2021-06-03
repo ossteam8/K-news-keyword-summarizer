@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% block content %}
     <main>
@@ -103,6 +104,7 @@
             key_list.push(keys);
             data_list.push(keywordset[keys]);
         }
+<<<<<<< HEAD
 
         Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
         Chart.defaults.global.defaultFontColor = '#292b2c';
@@ -153,6 +155,58 @@
           }
         });
 
+=======
+
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+
+
+        // escape 코드를 " 다음으로 대체함으로서 우리가 원하는 데이터 형태를 얻을 수 있음.
+        var ctx = document.getElementById("myBarChart");
+        var myLineChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+             labels: key_list,
+             //["keyword_1", "keyword_2", "keyword_3", "keyword_4", "keyword_5", "keyword_6"],  // 카테고리에 기반한 키워드 종류 (10개? 정도)
+            datasets: [{
+            //   label: "Revenue",
+              backgroundColor: "rgba(2,117,216,1)",
+              borderColor: "rgba(2,117,216,1)",
+              data: data_list,  // keyword 가중치!
+            }],
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                time: {
+                  unit: 'month'
+                },
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  maxTicksLimit: 10
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  min: 0,
+                  max: 1,
+                  maxTicksLimit: 10
+                },
+                gridLines: {
+                  display: true
+                }
+              }],
+            },
+            legend: {
+              display: false
+            },
+
+          }
+        });
+
+>>>>>>> e51c096d559aafea6ffe3345f4442028d1bf22f9
         ctx.addEventListener('click',function(evt){
             var firstPoint = myLineChart.getElementAtEvent(evt)[0];
             if(firstPoint){
@@ -197,4 +251,8 @@
 
     </script>
     <script src="{% static 'oss_proj/assets/demo/datatables-demo.js' %}"></script>
+<<<<<<< HEAD
 {% endblock %}
+=======
+{% endblock %}
+>>>>>>> e51c096d559aafea6ffe3345f4442028d1bf22f9

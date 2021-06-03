@@ -66,6 +66,8 @@ class Hangyere_crawling:
 
                             article_time = article.find("span",{"class":"date"}).string
                             article_time = self.get_date(article_time)
+                            if(int(article_time)>int(before_one_week)):
+                                continue
                             if(int(article_time)<int(before_one_week)): # 내가 원하는 요일까지의 자료만 필요하다
                                 return 
 
@@ -152,10 +154,12 @@ class Hangyere_crawling:
         for url in self.urls:
 
             category = self.categories[self.choose_category-1]
-
-            g = Goose({'stopwords_class':StopWordsKorean})
-            article = g.extract(url=url)
-            title = article.title
+            try:
+                g = Goose({'stopwords_class':StopWordsKorean})
+                article = g.extract(url=url)
+                title = article.title
+            except:
+                continue
             #print(title)
             contents = self.read_article_contents(url)
             if contents =="":

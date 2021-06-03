@@ -9,6 +9,6 @@ local_settings.py
 db.sqlite3
 media
 my_settings.py
-
+venv
 #no secrets.json file
 *secrets.json

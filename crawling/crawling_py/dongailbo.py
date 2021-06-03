@@ -10,7 +10,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from .categoryparser import Parse_category
+# from .categoryparser import Parse_category
 from urllib.request import Request, urlopen
 
 class Donga_crawling:
@@ -162,10 +162,12 @@ class Donga_crawling:
         for url in self.urls:
 
             category = self.categories[self.choose_category-1]
-
-            g = Goose({'stopwords_class':StopWordsKorean})
-            article = g.extract(url=url)
-            title = article.title
+            try:
+                g = Goose({'stopwords_class':StopWordsKorean})
+                article = g.extract(url=url)
+                title = article.title
+            except:
+                continue
             contents = self.read_article_contents(url)
             if contents =="":
                 continue
