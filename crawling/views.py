@@ -72,8 +72,26 @@ class ArticleListView(ListView):
 					article = Article.objects.filter(pk=id).first()
 					if article:
 						queryset.append(article)
+		# category_object = Category.objects.filter(category='정치').first()
+		
+		# try:
+		# 	id_query = Article.objects.filter(category=category_object).values_list('id', flat=True).order_by('id')
+		# 	article_id_list = list(id_query)
+		# 	article_contents_list = []
+		# 	for article_id in article_id_list:
+		# 		title = Article.objects.filter(pk=article_id).values('title')[0]['title']  # str
+		# 		contents = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
+		# 		query = contents + title
+		# 		article_contents_list.append(query)
+		# except:
+		# 	return None, None
 
-		print(queryset)
+		# with open('/Users/jjaen/politic_id.pickle', 'wb') as f:
+		# 	pickle.dump(article_id_list, f, pickle.HIGHEST_PROTOCOL)
+		
+		# with open('/Users/jjaen/politic_contents.pickle', 'wb') as f:
+		# 	pickle.dump(article_contents_list, f, pickle.HIGHEST_PROTOCOL)
+
 			
 		return render(request, self.template_name, {'articles_list': queryset, 'category': category, 'keyword': keyword})
 
@@ -97,11 +115,11 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 
 	for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
 		if politic:
-			Article.objects.create(title=politic['title'], contents=politic['contents'], url=politic['url'], category=politic_object)
+			Article.objects.create(title=politic['title'].encode('utf8'), contents=politic['contents'].encode('utf8'), url=politic['url'], category=politic_object)
 		if economy:
-			Article.objects.create(title=economy['title'], contents=economy['contents'], url=economy['url'], category=economy_object)
+			Article.objects.create(title=economy['title'].encode('utf8'), contents=economy['contents'].encode('utf8'), url=economy['url'], category=economy_object)
 		if society:
-			Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
+			Article.objects.create(title=society['title'].encode('utf8'), contents=society['contents'].encode('utf8'), url=society['url'], category=society_object)
 
 
 # NLP에 필요한 기사 return
@@ -127,8 +145,6 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 			article_contents_list.append(query)
 	except:
 		return None, None
-	print(article_id_list, "\n\n\n")
-	print(article_contents_list)
 
 	return article_id_list, article_contents_list
 
