@@ -9,6 +9,8 @@ class Category(models.Model):
 	id = models.AutoField(primary_key=True)
 	category = models.CharField(max_length=64)
 	keywords = models.JSONField(default=dict, null=True, blank=True)
+	topics = PickledObjectField(null=True, blank=True)  # [{1: 'k1'} : {id: rate, id: rate, id: rate, ,,,}
+														 #  {2: 'k2'} : {id: rate, id: rate, id: rate, ,,,} ,,,]
 
 	def __str__(self):
 		return self.category
@@ -17,20 +19,21 @@ class Category(models.Model):
 		db_table = 'category'
 
 
-class SearchWord(models.Model):
-	search_word = models.CharField(max_length=64)
-	keywords = models.JSONField(default=dict, null=True, blank=True)
+# class SearchWord(models.Model):
+# 	search_word = models.CharField(max_length=64)
+# 	keywords = models.JSONField(default=dict, null=True, blank=True)
+	
 
-	def __str__(self):
-		return self.search_word
+# 	def __str__(self):
+# 		return self.search_word
 
-	class Meta:
-		db_table = 'searchword'
+# 	class Meta:
+# 		db_table = 'searchword'
 
 
 class Article(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
-	search_word = models.ForeignKey(SearchWord, on_delete=models.CASCADE, null=True, blank=True)
+	# search_word = models.ForeignKey(SearchWord, on_delete=models.CASCADE, null=True, blank=True)
 
 	id = models.AutoField(primary_key=True)  # BigAutoField
 	title = models.CharField(max_length=128)
@@ -41,7 +44,7 @@ class Article(models.Model):
 	summary = models.TextField(null=True, blank=True)
 	# vectors = PickledObjectField(null=True, blank=True)
 	# similarity = models.FloatField(null=True, blank=True)  # localize=False 일 때 NumberInput, 그 외 TextInput
-	top_keywords = PickledObjectField( null=True, blank=True)  # list
+	# top_keywords = PickledObjectField(null=True, blank=True)  # list
 
 	
 	def __str__(self):

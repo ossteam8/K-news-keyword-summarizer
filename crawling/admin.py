@@ -4,4 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(Article)
 admin.site.register(Category)
-admin.site.register(SearchWord)
+# admin.site.register(SearchWord)
