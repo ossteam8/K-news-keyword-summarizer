@@ -48,8 +48,6 @@ def politic_crawling():
     ytn.category_crawling(1)
     ytn_list = ytn.get_news()
     politic_list = asia_list+donga_list+hangyere_list+herreld_list+jungang_list+kukmin_list+kyeonghang_list+moneytoday_list+neil_list+ytn_list
-    # politic_list = asia_list+jungang_list+moneytoday_list+herreld_list+hangyere_list
-    print(politic_list)
     return politic_list
 
 def economic_crawling():
@@ -89,7 +87,6 @@ def economic_crawling():
     ytn.category_crawling(2)
     ytn_list = ytn.get_news()
     economic_list = asia_list+donga_list+hangyere_list+herreld_list+jungang_list+kukmin_list+kyeonghang_list+moneytoday_list+neil_list+ytn_list
-    # economic_list = asia_list+jungang_list+moneytoday_list+herreld_list+hangyere_list
     return economic_list
 
 def society_crawling():
@@ -130,7 +127,6 @@ def society_crawling():
     ytn.category_crawling(3)
     ytn_list = ytn.get_news()
     society_list = asia_list+donga_list+hangyere_list+herreld_list+jungang_list+kukmin_list+kyeonghang_list+moneytoday_list+neil_list+ytn_list
-    # society_list = asia_list+jungang_list+moneytoday_list+herreld_list+hangyere_list
     return society_list
 
 
