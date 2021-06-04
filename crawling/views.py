@@ -10,6 +10,8 @@ from itertools import zip_longest
 
 from .models import Article, Category
 
+import pickle
+
 
 class CategoryListView(ListView):
 	template_name = 'crawling/index.html' 
@@ -23,6 +25,7 @@ class CategoryListView(ListView):
 			articles = Article.objects.filter(register_date__date=week_date)
 			num_of_articles[str(i+1)] = articles.count()
 		num_of_articles = json.dumps(num_of_articles)
+
 		return render(request, self.template_name, {'category_list': category_list, 'num_of_articles': num_of_articles})
 
 
@@ -118,12 +121,17 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 		article_id_list = list(id_query)
 		article_contents_list = []
 		for article_id in article_id_list:
-			contents_query = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
-			article_contents_list.append(contents_query)
+			title = Article.objects.filter(pk=article_id).values('title')[0]['title']  # str
+			contents = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
+			query = contents + title
+			article_contents_list.append(query)
 	except:
 		return None, None
+	print(article_id_list, "\n\n\n")
+	print(article_contents_list)
 
 	return article_id_list, article_contents_list
+
 
 
 # topics 저장
