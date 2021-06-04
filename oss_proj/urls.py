@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from crawling.views import CategoryListView, CategoryDetailView, ArticleListView #, ArticleDetailView
+from crawling.views import CategoryListView, CategoryDetailView, ArticleListView, ArticleDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +23,6 @@ urlpatterns = [
 
     path('keywords/<int:category_id>', CategoryDetailView.as_view(), name='category_keywords'),
     path('articles/<int:category_id>/<keyword>', ArticleListView.as_view(), name='article_list'),  # (?P<keyword>[\w-]+)/$
+    path('summary/<int:article_id>', ArticleDetailView.as_view(), name='summary'),
 ]
 
