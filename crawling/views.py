@@ -1,8 +1,6 @@
 from django.db.models import query
 from django.shortcuts import render
 
-# from django.urls import reverse_lazy
-# Generic View는 정해진 것을 사용하기 때문에 쉽지만 정해진 규약이 많다
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView 
 
