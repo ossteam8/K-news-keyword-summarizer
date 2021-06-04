@@ -35,5 +35,88 @@
             </div>
         </div>
     </main>
-{% endblock %}
 
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script src="{% static 'oss_proj/js/scripts.js' %}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript">
+// Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#292b2c';
+    // Area Chart Example
+    var ctx = document.getElementById("myAreaChart");
+    var today = new Date();
+    var day_list = []
+    var articles = JSON.parse('{{num_of_articles|safe}}');
+    var article_list = [];
+    for(i in articles){
+        article_list.push(articles[i]);
+    }
+    // console.log(keywordset)
+    for(var i=7;i>=1;i--){
+        today = new Date();
+        var day = new Date(today.setDate(today.getDate()-i));
+
+        day = moment(day).format('MMM DD')
+        day_list.push(day);
+    }
+    article_list = article_list.reverse();
+    var myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+
+        labels: day_list,  // 일주일 날짜
+        datasets: [{
+          label: "Article",
+          lineTension: 0.3,
+          backgroundColor: "rgba(2,117,216,0.2)",
+          borderColor: "rgba(2,117,216,1)",
+          pointRadius: 5,
+          pointBackgroundColor: "rgba(2,117,216,1)",
+          pointBorderColor: "rgba(255,255,255,0.8)",
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(2,117,216,1)",
+          pointHitRadius: 50,
+          pointBorderWidth: 2,
+          data: article_list, // 여기에 날짜에 따른 기사 개수
+        }],
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            time: {
+              unit: 'date'
+            },
+            gridLines: {
+              display: false
+            },
+            ticks: {
+              maxTicksLimit: 7
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 5000,
+              maxTicksLimit: 10
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, .125)",
+            }
+          }],
+        },
+        legend: {
+          display: false
+        }
+      }
+    });
+
+</script>
+<script src="{% static 'oss_proj/assets/demo/datatables-demo.js' %}"></script>
+{% endblock %}

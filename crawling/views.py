@@ -19,9 +19,12 @@ class CategoryListView(ListView):
 		num_of_articles = {}
 		for i in range(7):
 			week_date = datetime.datetime.now() - datetime.timedelta(days=i)
-			articles = Article.objects.filter(register_date__date=week_date).order_by('register_date')
-			num_of_articles[str(i+1)] = articles.count()
-		return render(request, self.template_name, {'category_list': category_list})
+			
+			articles = Article.objects.filter(register_date__date=week_date)
+			num_of_articles[str(i)] = articles.count()
+		num_of_articles = json.dumps(num_of_articles)
+		print(num_of_articles)
+		return render(request, self.template_name, {'category_list': category_list,'num_of_articles':num_of_articles})
 
 
 # category 선택 시, 해당 category 의 keywords 를 보여줌!
