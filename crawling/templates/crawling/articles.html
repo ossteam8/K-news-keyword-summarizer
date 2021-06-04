@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead> <!-- 여기에 기사 나열!! -->
+                        <thead> 
                             <tr>
                                 <th>Title</th>
                                 <th>Category</th>
@@ -21,8 +21,7 @@
                         <tbody>
                             {% for article in articles_list %}
                             <tr>
-                                <td>{{ article.title }}</td>
-                                <!-- <td><a href="#">{{ article.title }}</a></td> -->
+                                <td><a href="{% url 'summary' article.id %}">{{ article.title }}</a></td>
                                 <td>{{ article.category }}</td>
                                 <td><a href="{{ article.url }}">{{ article.url }}</a></td>
                                 <td>{{ article.register_date }}</td>
