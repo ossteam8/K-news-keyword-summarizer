@@ -20,7 +20,7 @@ class Jungang_crawling:
         self.categories = ['정치','경제','사회']
         self.article_url = ""
         self.urls = []
-        self.article_info = {"title":"","contents":"","url":"","category":""}  # 각 기사의 정보들
+        # self.article_info = {"title":"","contents":"","url":"","category":""}  # 각 기사의 정보들
         self.choose_category=0
         self.articles = [] # 각 기사들의 정보들을 담을 리스트
         self.check_valid = True # 검색했을때 나오는 데이터가 나오는지 안나오는지를 비교
@@ -159,8 +159,10 @@ class Jungang_crawling:
     def get_news(self,*categories):# 실제로 url에 들어가 기사들을 읽어온다 , 첫번째 카테고리만으로 검색했을때 데이터를 가져와준다
         #categories 는 1,2,3숫자를 받는다(여러개 가능)
         print('기사 추출 시작')
+        articles = []
         for url in self.urls:
-            
+            # print(url)
+            article_info = {"title":"","contents":"","url":"","category":""}
             checkc = True
             category = self.categories[self.choose_category-1]
             try:
@@ -173,14 +175,15 @@ class Jungang_crawling:
             contents = self.read_article_contents(url)
             if(contents==""):
                 continue
-            self.article_info["category"] = category
-            self.article_info["contents"] = contents
-            self.article_info["title"] = title
-            self.article_info["url"] = url
-            self.articles.append(self.article_info)
+            article_info["category"] = category
+            article_info["contents"] = contents
+            article_info["title"] = title
+            article_info["url"] = url
+                        # print(self.article_info)
+            articles.append(article_info)
             self.num_article+=1
 
-        return self.articles    
+        return articles    
         
 
 if __name__ == "__main__":
@@ -192,8 +195,8 @@ if __name__ == "__main__":
     A = Jungang_crawling()
     A.category_crawling(2)
     ll = A.get_news(3)
-    print(len(ll))
-    print(A.num_article)
+    # print(ll)
+  
     # A = jungang_crawling(2)
 
     # 반대로 단순 검색시에는 2번으로 초기화를 하고

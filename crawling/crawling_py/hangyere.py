@@ -10,7 +10,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from .categoryparser import Parse_category
+# from .categoryparser import Parse_category
 from urllib.request import Request, urlopen
 
 class Hangyere_crawling:
@@ -21,7 +21,6 @@ class Hangyere_crawling:
         self.categories = ['정치','경제','사회']
         self.article_url = ""
         self.urls = []
-        self.article_info = {"title":"","contents":"","url":"","category":""}  # 각 기사의 정보들
         self.articles = [] # 각 기사들의 정보들을 담을 리스트
         self.check_valid = True # 검색했을때 나오는 데이터가 나오는지 안나오는지를 비교
         self.num_article = 0
@@ -152,7 +151,7 @@ class Hangyere_crawling:
         #categories 는 1,2,3숫자를 받는다(여러개 가능)
         print('기사 추출 시작')
         for url in self.urls:
-
+            article_info = {"title":"","contents":"","url":"","category":""}
             category = self.categories[self.choose_category-1]
             try:
                 g = Goose({'stopwords_class':StopWordsKorean})
@@ -165,11 +164,11 @@ class Hangyere_crawling:
             if contents =="":
                 continue
             
-            self.article_info["category"] = category
-            self.article_info["contents"] = contents
-            self.article_info["title"] = title
-            self.article_info["url"] = url
-            self.articles.append(self.article_info)
+            article_info["category"] = category
+            article_info["contents"] = contents
+            article_info["title"] = title
+            article_info["url"] = url
+            self.articles.append(article_info)
             self.num_article+=1
 
         return self.articles    
