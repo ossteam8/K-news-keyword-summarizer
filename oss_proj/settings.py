@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import datetime
 from pathlib import Path
 import os
 import json
@@ -66,13 +65,14 @@ INSTALLED_APPS = [
     'crawling.apps.CrawlingConfig',
     'summary.apps.SummaryConfig',
     'keywords.apps.KeywordsConfig',
-    # '',
+
 ]
 
 CRONJOBS = [
-#     ('* 0 * * *', 'crawling.cron.crontab_job')
-    ('* 0 * * *', 'django.core.article_crawling_job'),
+    ('* 0 * * *', 'crawling.cron.article_crawling_job', '>> /Users/jjaen/scheduled_job.log'),
 ]
+
+CRONTAB_DJANGO_SETTINGS_MODULE = 'oss_proj.settings'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
