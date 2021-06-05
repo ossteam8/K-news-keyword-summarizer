@@ -27,12 +27,12 @@ In secrets.json, you must write SECRET_KEY. Like:**
 ```python
 DATABASES = {
 	'default': { 
-		'ENGINE':'django.db.backends.mysql', # mysql 엔진 설정
-		'NAME':'oss', # 데이터베이스 이름 
-		'USER':'root', # 데이터베이스 연결시 사용할 유저 이름
-		'PASSWORD':'PASSWORD',# 유저 패스워드
-        'HOST':'127.0.0.1', # 데이터베이스 서버 주소
-        'PORT':'3306' # 데이터베이스 서버 포트
+		'ENGINE':'django.db.backends.mysql', # mysql engine
+		'NAME':'oss', # database name
+		'USER':'root', # user name when connected database
+		'PASSWORD':'PASSWORD',# user password
+        	'HOST':'127.0.0.1', # database server address
+        	'PORT':'3306' # database server port
     }
 }
 ```
