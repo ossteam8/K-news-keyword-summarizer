@@ -9,9 +9,26 @@ top keywords 10을 뽑기 위하여 (무엇을 이용)
 
 ## Running project
 #### before running our project 
-**need some packages to run our project**
+**we use Django version 3.2.4 and mysql for viewing
+and we user (여기에 키워드랑 요약에 쓰이는 것들 적어야할듯)
+so if you want to run our project you need some packages to run our project**
 ```
  $ pip install django==3.2.4
+```
+```
+ $ pip install goose3
+```
+```
+ $ pip install mysqlclient
+```
+```
+ $ pip install django-picklefield
+```
+```
+ $ pip install django-extensions
+```
+```
+ $ pip install django_crontab
 ```
 
 
