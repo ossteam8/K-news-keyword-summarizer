@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">{{ keyword }}</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'keywords_list' category_id %}">{{ category }}</a></li>
+            <li class="breadcrumb-item active">{{ keyword }}</li>
+        </ol>
+        <h5 class="mt-4">연관 키워드</h5>
+        {% for keyword in keywords_list %}
+        <button type="button" class="btn btn-primary">{{ keyword }}</button>    
+        {% endfor %}
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead> 
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>URL</th>
+                            <th>Published Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles_list %}
+                        <tr>
+                            <td><a href="{% url 'summary' article.id %}">{{ article.title }}</a></td>
+                            <td>{{ article.category }}</td>
+                            <td><a href="{{ article.url }}">{{ article.url }}</a></td>
+                            <td>{{ article.register_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

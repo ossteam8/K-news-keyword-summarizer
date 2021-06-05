@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Summary</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Summary</li>
+            </ol>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Articles
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>URL</th>
+                                    <th>Published Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if article %}
+                                <tr>
+                                    <td>{{ article.title }}</td>
+                                    <td>{{ article.category }}</td>
+                                    <td><a href="{{ article.url }}">{{ article.url }}</a></td>
+                                    <td>{{ article.register_date }}</td>
+                                </tr>
+                               {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col" style="width: 50%;">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Contents    
+                        </div>
+                        <div class="card-body" >
+                            {% if article.contents %}
+                                {{ article.contents }}
+                            {% endif %}
+                        </div>
+                    </div> -->
+                </div>
+                <div class="col" style="width: 50%;">  
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Summary  
+                        </div>
+                        <div class="card-body" >
+                            {% if article.summary %}
+                                {{ article.summary }}
+                            {% endif %}
+                        </div>
+                            
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                
+            </div>
+        </div>
+    </main>
+{% endblock %}

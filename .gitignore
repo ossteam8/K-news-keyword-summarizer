@@ -1,0 +1,15 @@
+### Django ###
+# log file
+*.log   
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+# datebase
+db.sqlite3
+media
+my_settings.py
+venv
+#no secrets.json file
+*secrets.json
+.DS_Store
