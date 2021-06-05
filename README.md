@@ -35,7 +35,7 @@ so if you want to run our project you need some packages to run our project**
 ```
 ### After install packages
 **you must create secrets.json and my_settings.py in same locate of manage.py
-In secrets.json, you must write SECRET_KEY like:**
+In secrets.json, you must write SECRET_KEY. Like:**
 ```python
 {
     "SECRET_KEY" : "your secret key"
