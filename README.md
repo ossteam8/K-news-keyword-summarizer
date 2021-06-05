@@ -48,10 +48,10 @@ tracking requests, bugs, and enhance our project.
 So if you have an issue of project, then make and submit new issue.**
 
 ## Contributors list
- ***Choi Jaeeun  
- *linkyouhj  
- *Chae Hui Seon  
- *namhyo01**    
+ **- Choi Jaeeun  
+ - linkyouhj  
+ - Chae Hui Seon  
+ - namhyo01**    
 
 ## License
 **MIT License**
