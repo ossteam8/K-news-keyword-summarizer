@@ -47,10 +47,10 @@ tracking requests, bugs, and enhance our project.
 So if you have an issue of project, then make and submit new issue.**
 
 ## Contributors list
- **- [Choi Jaeeun](https://github.com/jjaen0823)**  
- **- [linkyouhj](https://github.com/linkyouhj)**  
- **- [Chae Hui Seon](https://github.com/chaehuiseon)**  
- **- [namhyo01](https://github.com/namhyo01)**    
+  **- [Choi Jaeeun](https://github.com/jjaen0823)**  
+  **- [linkyouhj](https://github.com/linkyouhj)**  
+  **- [Chae Hui Seon](https://github.com/chaehuiseon)**  
+  **- [namhyo01](https://github.com/namhyo01)**    
 
 ## License
 **[MIT License](LICENSE)**
