@@ -70,6 +70,7 @@ INSTALLED_APPS = [
 
 CRONJOBS = [
     ('* 0 * * *', 'crawling.cron.article_crawling_job', '>> /Users/jjaen/scheduled_job.log'),
+    # keyword 추출하는 cron도 등록해야 함.
 ]
 
 CRONTAB_DJANGO_SETTINGS_MODULE = 'oss_proj.settings'
