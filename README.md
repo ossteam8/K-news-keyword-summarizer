@@ -14,7 +14,7 @@ and used LDA in gensim and TextRank to extract keywords**
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
 ### In order to install **Mecab** please use the line below at your terminal
 ```
-bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
 ```
 ### After install packages
 **you must create secrets.json and my_settings.py in same locate of manage.py
