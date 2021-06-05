@@ -9,7 +9,7 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 ## Running project
 ### before running our project 
 **we use Django version 3.2.4 and mysql for viewing and save data, use BeautifulSoup4 and goose3 for crawling
-and used LDA and TextRank to extract keywords**  
+and used LDA in gensim and TextRank to extract keywords**  
 **so if you want to run our project you need some packages.**  
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
 ### In order to install **Mecab** please use the line below at your terminal
