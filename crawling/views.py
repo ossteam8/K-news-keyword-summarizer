@@ -5,7 +5,7 @@ from itertools import zip_longest
 
 from .models import Article, Category
 
-# import pickle
+import pickle
 
 
 class CategoryListView(ListView):
