@@ -12,7 +12,10 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 and we use (여기에 키워드랑 요약에 쓰이는 것들 적어야할듯)**  
 **so if you want to run our project you need some packages.**  
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
-
+##Mecab 설치를 위해 아래 코드를 terminal 환경에서 실행해주세요
+```
+bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
+```
 
 ### After install packages
 **you must create secrets.json and my_settings.py in same locate of manage.py
