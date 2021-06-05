@@ -28,17 +28,17 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 	politic_object = Category.objects.filter(category='정치').first()
 	economy_object = Category.objects.filter(category='경제').first()
 	society_object = Category.objects.filter(category='사회').first()
-	try:
-		for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
+	for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
+		try:
 			if politic:
-				Article.objects.create(title=politic['title'].encode('utf8'), contents=politic['contents'].encode('utf8'), url=politic['url'], category=politic_object)
+				Article.objects.create(title=politic['title'], contents=politic['contents'], url=politic['url'], category=politic_object)
 			if economy:
-				Article.objects.create(title=economy['title'].encode('utf8'), contents=economy['contents'].encode('utf8'), url=economy['url'], category=economy_object)
+				Article.objects.create(title=economy['title'], contents=economy['contents'], url=economy['url'], category=economy_object)
 			if society:
-				Article.objects.create(title=society['title'].encode('utf8'), contents=society['contents'].encode('utf8'), url=society['url'], category=society_object)
-	except Exception as e:
-		print(e)
-		return False
+				Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
+		except Exception as e:
+			print(e)
+			continue
 	
 	return True
 
