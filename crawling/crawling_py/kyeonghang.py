@@ -182,6 +182,8 @@ class Kyeonghang_crawling:
             except:
                 continue
             #print(title)
+            if title=="":
+                continue
             contents = self.read_article_contents(url)
             if contents == "":
                 continue

@@ -168,6 +168,8 @@ class Donga_crawling:
                 title = article.title
             except:
                 continue
+            if title=="":
+                continue
             contents = self.read_article_contents(url)
             if contents =="":
                 continue
