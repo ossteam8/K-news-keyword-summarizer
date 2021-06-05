@@ -38,7 +38,20 @@ so if you want to run our project you need some packages to run our project**
 In secrets.json, you must write SECRET_KEY like:**
 ```python
 {
-    "SECRET_KEY" : "(your secret key)"
+    "SECRET_KEY" : "your secret key"
+}
+```
+**In my_settings.py, you must write information of DATABASE. Like:**
+```python
+DATABASES = {
+	'default': { 
+		'ENGINE':'django.db.backends.mysql', # mysql 엔진 설정
+		'NAME':'oss', # 데이터베이스 이름 
+		'USER':'root', # 데이터베이스 연결시 사용할 유저 이름
+		'PASSWORD':'PASSWORD',# 유저 패스워드
+        'HOST':'127.0.0.1', # 데이터베이스 서버 주소
+        'PORT':'3306' # 데이터베이스 서버 포트
+    }
 }
 ```
 
