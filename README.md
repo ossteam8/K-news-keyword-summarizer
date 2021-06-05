@@ -53,7 +53,7 @@ So if you have an issue of project, then make and submit new issue.**
  **- namhyo01**    
 
 ## License
-**MIT License**
+**[MIT License](LICENSE)**
 
 
 
