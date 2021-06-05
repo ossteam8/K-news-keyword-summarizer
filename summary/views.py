@@ -1,9 +1,15 @@
 from django.shortcuts import render
-from crawling.views import Article
+from django.views.generic.detail import DetailView
+
+from crawling.models import Article
 
 
-# Create your views here.
+# summary 화면
+class SummaryView(DetailView):
+	# id = article id !! (pk)
+	template_name = 'crawling/summary.html'
 
-# summary 저장
-def save_summary(summary):
-    pass
+	def get(self, request, article_id):
+		queryset = Article.objects.filter(pk=article_id).first()
+		
+		return render(request, self.template_name, {'article':queryset})
