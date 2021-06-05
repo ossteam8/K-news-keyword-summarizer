@@ -60,8 +60,8 @@
                             
                             <tbody>
                                 {% for article in articles_list %}
-                                <tr>
-                                    <td><a href="{% url 'summary' article.id %}">{{ article.title }}</a></td>
+                                <tr onclick="location.href='/summary/{{ article.id }}'">
+                                    <td>{{ article.title }}/td>
                                     <td>{{ article.category }}</td>
                                     <td><a href="{{ article.url }}">{{ article.url }}</a></td>
                                     <td>{{ article.register_date }}</td>
