@@ -1,13 +1,13 @@
 import re
-import time
-import sys
+# import time
+# import sys
 from goose3 import Goose
-import pickle
+# import pickle
 from goose3.text import StopWordsKorean
-import requests
+# import requests
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.parse
+# import urllib.request
+# import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -120,11 +120,11 @@ class Jungang_crawling:
 
 
     # 검색했을때의 크롤링 + 검색,카테고리 크롤링 => 이젠 무쓸모
-    def searching_category(self,searching):
-        title = urllib.parse.quote(searching)
-        self.article_url = "https://news.joins.com/Search/JoongangNews?Keyword="+title+"&SortType=New&SearchCategoryType=JoongangNews&PeriodType=OneWeek&ScopeType=All&ImageType=All&JplusType=All&BlogType=All&ImageSearchType=Image&TotalCount=0&StartCount=0&IsChosung=False&IssueCategoryType=All&IsDuplicate=True&Page=1&PageSize=10&IsNeedTotalCount=True"
+    # def searching_category(self,searching):
+    #     title = urllib.parse.quote(searching)
+    #     self.article_url = "https://news.joins.com/Search/JoongangNews?Keyword="+title+"&SortType=New&SearchCategoryType=JoongangNews&PeriodType=OneWeek&ScopeType=All&ImageType=All&JplusType=All&BlogType=All&ImageSearchType=Image&TotalCount=0&StartCount=0&IsChosung=False&IssueCategoryType=All&IsDuplicate=True&Page=1&PageSize=10&IsNeedTotalCount=True"
         
-        self.crawling()
+    #     self.crawling()
         
     # def searching_category_crawling(self,searching,category):
         
@@ -198,6 +198,11 @@ if __name__ == "__main__":
     A = Jungang_crawling()
     A.category_crawling(2)
     ll = A.get_news(3)
+
+    with open("aaaaaaaaa.txt","w",encoding='utf-8') as f:
+        for i in ll:
+            f.write(i['contents'])
+            f.write('\n\n\n')
     # print(ll)
   
     # A = jungang_crawling(2)

@@ -8,10 +8,17 @@ from crawling.models import Article, Category
 
 # category 선택 시, 해당 category 의 keywords 를 보여줌!
 class KeywordsListView(ListView):
-	template_name = 'crawling/keywords.html' 
+	template_name = 'crawling/keywords_list.html' 
 
 	def get(self, request, category_id):
 		category = Category.objects.filter(id=category_id).values('category')[0]['category']
+		# (Category.objects.filter(pk=category_id)).update(
+		#   topics={1: [ ['k1', 'k11'], {11: 0.1, 22: 0.2, 35555:0.3} ] , 2: [ ['k2', 'k22', 'k222'], {10: 1, 11: 1.1, 12: 1.2} ] }
+		# )
+		# (Category.objects.filter(pk=category_id)).update(
+		#   keywords={1: ['k1', 'k11'], 2: ['k2', 'k22', 'k222'] }
+		# )
+		
 
 		# queryset: dict {1: ['k1', ,,,], 2: ['k2', ,,,], ,,,}
 		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
