@@ -1,13 +1,13 @@
 import re
-import time
-import sys
+# import time
+# import sys
 from goose3 import Goose
-import pickle
+# import pickle
 from goose3.text import StopWordsKorean
-import requests
+# import requests
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.parse
+# import urllib.request
+# import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 # from .categoryparser import Parse_category
@@ -157,6 +157,8 @@ class Kukmin_crawling:
             except:
                 continue
             #print(title)
+            if title=="":
+                continue
             contents = self.read_article_contents(url)
             find_email = re.compile('[a-zA-Z0-9_-]+@[a-z]+.[a-z]+').finditer(contents)
             for email in find_email:
@@ -180,5 +182,9 @@ if __name__ == "__main__":
     A = Kukmin_crawling()
     A.category_crawling(3)
     ll = A.get_news()
+    with open("aaaaaaaaa.txt","w",encoding='utf-8') as f:
+        for i in ll:
+            f.write(i['contents'])
+            f.write('\n\n\n')
 
  

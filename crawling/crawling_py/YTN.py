@@ -1,13 +1,13 @@
 import re
-import time
-import sys
+# import time
+# import sys
 from goose3 import Goose
-import pickle
+# import pickle
 from goose3.text import StopWordsKorean
-import requests
+# import requests
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.parse
+# import urllib.request
+# import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 # from .categoryparser import Parse_category
@@ -182,6 +182,8 @@ class YTN_crawling:
                 article = g.extract(url=url)
                 title = article.title
                 #print(title)
+                if title=="":
+                    continue
                 contents = self.read_article_contents(url)
                 if contents == "":
                     continue

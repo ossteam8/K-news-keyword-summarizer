@@ -1,16 +1,9 @@
 import re
-import time
-import sys
 from goose3 import Goose
-import pickle
 from goose3.text import StopWordsKorean
-import requests
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-# from .categoryparser import Parse_category
 from urllib.request import Request, urlopen
 
 class Herald_crawling:
@@ -170,6 +163,8 @@ class Herald_crawling:
             except:
                 continue
             #print(title)
+            if title=="":
+                continue
             contents = self.read_article_contents(url)
             if contents == "":
                 continue

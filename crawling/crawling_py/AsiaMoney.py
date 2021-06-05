@@ -1,16 +1,8 @@
 import re
-import time
-import sys
 from goose3 import Goose
-import pickle
 from goose3.text import StopWordsKorean
-import requests
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.parse
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
-# from .categoryparser import Parse_category
 from urllib.request import Request, urlopen
 
 class AsiaMoney_crawling:
@@ -150,7 +142,7 @@ class AsiaMoney_crawling:
         
             with urlopen(req) as response:
                 html = response.read()
-                soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
+                soup = BeautifulSoup(html, 'html.parser',from_encoding='euc-kr')
                 article_contents = soup.find("div",{"class":"article_view"})
                 text = ""
                 try:
@@ -160,6 +152,7 @@ class AsiaMoney_crawling:
 
                 return text
         except:
+            print('wow')
             return ""
         
 
@@ -179,6 +172,8 @@ class AsiaMoney_crawling:
             except:
                 continue
             #print(title)
+            if title=="":
+                continue
             contents = self.read_article_contents(url)
             if contents == "":
                 continue
@@ -187,6 +182,7 @@ class AsiaMoney_crawling:
             find_email = re.compile('[a-zA-Z0-9_-]+@[a-z]+.[a-z]+').finditer(contents)
             for email in find_email:
                 contents = contents[:email.start()]
+            contents = contents.replace('썝蹂몃낫湲 븘씠肄', '')
             article_info["category"] = category
             article_info["contents"] = contents
             article_info["title"] = title
@@ -213,6 +209,6 @@ if __name__ == "__main__":
             f.write(i['contents'])
             f.write('\n\n\n')
         
-    print(ll)
+    # print(ll)
 
  
