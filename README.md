@@ -35,7 +35,7 @@ DATABASES = {
     }
 }
 ```
-**After setting these two files, now you have to do migrate **  
+**After setting these two files, now you have to do migrate**  
 ```
  $ python3 manage.py makemigrations 
 ```
