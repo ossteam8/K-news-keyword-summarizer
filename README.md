@@ -12,7 +12,7 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 and used LDA and TextRank to extract keywords**  
 **so if you want to run our project you need some packages.**  
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
-## In order to install **Mecab** please use the line below at your terminal
+### In order to install **Mecab** please use the line below at your terminal
 ```
 bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
 ```
