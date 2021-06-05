@@ -9,14 +9,13 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 ## Running project
 ### before running our project 
 **we use Django version 3.2.4 and mysql for viewing and save data, use BeautifulSoup4 and goose3 for crawling
-and we use (여기에 키워드랑 요약에 쓰이는 것들 적어야할듯)**  
+and used LDA and TextRank to extract keywords**  
 **so if you want to run our project you need some packages.**  
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
-## Mecab 설치를 위해 아래 코드를 terminal 환경에서 실행해주세요
+## In order to install **Mecab** please use the line below at your terminal
 ```
 bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
 ```
-Cancel changes
 ### After install packages
 **you must create secrets.json and my_settings.py in same locate of manage.py
 In secrets.json, you must write SECRET_KEY. Like:**
