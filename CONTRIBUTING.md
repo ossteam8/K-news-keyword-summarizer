@@ -22,5 +22,21 @@ If you want to contribute our project, nevigate to
 [GitHub issue tab](https://github.com/ossteam8/oss8_proj/issues) and choose one of them.  
 Also you can write issue on this tab if you find some issues.  
 If you decide to start an issue, then leave comment so other people know that you are working
-on it.
+on it.  
+If you want to help out, but not alone, use the issue
+comment thread to coordinate.  
+### Contribution guidelines and standards
+
+Before sending your pull request for
+[review](https://github.com/ossteam8/oss8_proj/pulls),
+make sure your changes are consistent with the guidelines and follow the coding style.
+
+
+#### General guidelines and philosophy for contribution
+*   Please include unit tests when you contribute new features, as they help to a)
+    prove that your code works correctly, and b) guard against future breaking
+    changes to lower the maintenance cost.
+*   Bug fixes also generally require unit tests, because the presence of bugs
+    usually indicates insufficient test coverage.
+*   Also, write your environments of your computer system include hardware and software. 
 
