@@ -23,4 +23,13 @@ So if you have an issue of project, then make and submit new issue.**
 
 ### sites for using crawling
  - [중앙일보](https://joongang.joins.com/)
+ - [한겨레](https://www.hani.co.kr/arti/list.html)
+ - [헤럴드경제](http://biz.heraldcorp.com/)
+ - [아시아경제](https://www.asiae.co.kr/)
+ - [국민일보](http://www.kmib.co.kr/news/index.asp)
+ - [경향신문](http://www.khan.co.kr/)
+ - [머니투데이](https://www.mt.co.kr/)
+ - [동아일보](https://www.donga.com/)
+ - [YTN](https://www.ytn.co.kr/)
+ - [내일신문](https://www.naeil.com/)
 
