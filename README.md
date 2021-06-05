@@ -35,6 +35,23 @@ DATABASES = {
     }
 }
 ```
+**After setting these two files, now you have to do migrate **  
+```
+ $ python3 manage.py makemigrations 
+```
+
+```
+ $ python3 manage.py migrate
+```
+
+**If you finish these migate without errors then run server **  
+```
+ $ python3 manage.py runserver
+```
+**Then you can use the website. But first you may not have any data of crawling, keywords.  
+Our project start crawling, and find keywords at 0:00 every day.  
+So just wait until 0:00 then it will start doing jobs with crontab.  
+Finishing this job, now you can see the website with data.**
 
 ## Contribution guidelines
 **IF you want to contribute to our project, be sure to review the 
