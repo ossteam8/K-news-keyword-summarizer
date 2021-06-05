@@ -35,8 +35,8 @@ class Article(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	# search_word = models.ForeignKey(SearchWord, on_delete=models.CASCADE, null=True, blank=True)
 
-	id = models.AutoField(primary_key=True)  # BigAutoField
-	title = models.CharField(max_length=128)
+	id = models.BigAutoField(primary_key=True)
+	title = models.TextField()
 	contents = models.TextField()
 	url = models.URLField()
 	register_date = models.DateTimeField(auto_now_add=True)  # public date

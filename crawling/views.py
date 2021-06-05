@@ -10,6 +10,8 @@ from itertools import zip_longest
 
 from .models import Article, Category
 
+import pickle
+
 
 class CategoryListView(ListView):
 	template_name = 'crawling/index.html' 
@@ -20,9 +22,9 @@ class CategoryListView(ListView):
 		num_of_articles = {}
 		for i in range(7):
 			week_date = datetime.datetime.now() - datetime.timedelta(days=i)
-			articles = Article.objects.filter(register_date__date=week_date)
-			num_of_articles[str(i+1)] = articles.count()
+			num_of_articles[str(i+1)] = Article.objects.filter(register_date__date=week_date).count()
 		num_of_articles = json.dumps(num_of_articles)
+
 		return render(request, self.template_name, {'category_list': category_list, 'num_of_articles': num_of_articles})
 
 
@@ -36,10 +38,10 @@ class CategoryDetailView(DetailView):
 		# queryset: dict {1: ['k1', ,,,], 2: ['k2', ,,,], ,,,}
 		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
 		keywords_json = {}
-		print(keywords_queryset)
-		for k, v in keywords_queryset.items():
-			
-			keywords_json[v[0]] = k
+		if keywords_queryset:
+			for k, v in keywords_queryset.items():
+				keywords_json[v[0]] = k
+		
 		keywords_json = json.dumps(keywords_json)
 
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -60,19 +62,38 @@ class ArticleListView(ListView):
 		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
 		print(Category.objects.filter(pk=category_id).values('topics')[0])
 		topics = Category.objects.filter(pk=category_id).values('topics')[0]['topics']
-		category_object = Category.objects.filter(pk=category_id)
-		category_object.update(
-			topics={1: [ ['k1', 'k11'], {11: 0.1, 22: 0.2, 35555:0.3} ] , 2: [ ['k2', 'k22', 'k222'], {10: 1, 11: 1.1, 12: 1.2} ] }
-		)
-		for v in topics.values():
-			# v[1].keys() -> article id
-			if keyword in v[0]:  # ['k1', ,,,]
-				for id in v[1].keys():
-					article = Article.objects.filter(pk=id).first()
-					if article:
-						queryset.append(article)
+		# category_object = Category.objects.filter(pk=category_id)
+		# category_object.update(
+		# 	topics={1: [ ['k1', 'k11'], {11: 0.1, 22: 0.2, 35555:0.3} ] , 2: [ ['k2', 'k22', 'k222'], {10: 1, 11: 1.1, 12: 1.2} ] }
+		# )
+		if topics:
+			for v in topics.values():
+				# v[1].keys() -> article id
+				if keyword in v[0]:  # ['k1', ,,,]
+					for id in v[1].keys():
+						article = Article.objects.filter(pk=id).first()
+						if article:
+							queryset.append(article)
 
-		print(queryset)
+		# category_object = Category.objects.filter(category='정치').first()
+		# try:
+		# 	id_query = Article.objects.filter(category=category_object).values_list('id', flat=True).order_by('id')
+		# 	article_id_list = list(id_query)
+		# 	article_contents_list = []
+		# 	for article_id in article_id_list:
+		# 		title = Article.objects.filter(pk=article_id).values('title')[0]['title']  # str
+		# 		contents = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
+		# 		query = contents + title
+		# 		article_contents_list.append(query)
+		# except:
+		# 	return None, None
+
+		# with open('/Users/jjaen/politic_id.pickle', 'wb') as f:
+		# 	pickle.dump(article_id_list, f, pickle.HIGHEST_PROTOCOL)
+		
+		# with open('/Users/jjaen/politic_contents.pickle', 'wb') as f:
+		# 	pickle.dump(article_contents_list, f, pickle.HIGHEST_PROTOCOL)
+
 			
 		return render(request, self.template_name, {'articles_list': queryset, 'category': category, 'keyword': keyword})
 
@@ -93,14 +114,17 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 	politic_object = Category.objects.filter(category='정치').first()
 	economy_object = Category.objects.filter(category='경제').first()
 	society_object = Category.objects.filter(category='사회').first()
+	try:
+		for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
+			if politic:
+				Article.objects.create(title=politic['title'].encode('utf8'), contents=politic['contents'].encode('utf8'), url=politic['url'], category=politic_object)
+			if economy:
+				Article.objects.create(title=economy['title'].encode('utf8'), contents=economy['contents'].encode('utf8'), url=economy['url'], category=economy_object)
+			if society:
+				Article.objects.create(title=society['title'].encode('utf8'), contents=society['contents'].encode('utf8'), url=society['url'], category=society_object)
+	except Exception as e:
+		print(e)
 
-	for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
-		if politic:
-			Article.objects.create(title=politic['title'], contents=politic['contents'], url=politic['url'], category=politic_object)
-		if economy:
-			Article.objects.create(title=economy['title'], contents=economy['contents'], url=economy['url'], category=economy_object)
-		if society:
-			Article.objects.create(title=society['title'], contents=society['contents'], url=society['url'], category=society_object)
 
 
 # NLP에 필요한 기사 return
@@ -120,12 +144,15 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 		article_id_list = list(id_query)
 		article_contents_list = []
 		for article_id in article_id_list:
-			contents_query = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
-			article_contents_list.append(contents_query)
+			title = Article.objects.filter(pk=article_id).values('title')[0]['title']  # str
+			contents = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
+			query = contents + title
+			article_contents_list.append(query)
 	except:
 		return None, None
 
 	return article_id_list, article_contents_list
+
 
 
 # topics 저장
@@ -150,7 +177,6 @@ def save_topics(category, topics, topics_num):
 			topics=topics,
 			keywords=keywords,
 		)
-			
 	except:
 		return False
 

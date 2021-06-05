@@ -183,6 +183,10 @@ class AsiaMoney_crawling:
             if contents == "":
                 continue
             #print(contents)
+            
+            find_email = re.compile('[a-zA-Z0-9_-]+@[a-z]+.[a-z]+').finditer(contents)
+            for email in find_email:
+                contents = contents[:email.start()]
             article_info["category"] = category
             article_info["contents"] = contents
             article_info["title"] = title
@@ -206,8 +210,8 @@ if __name__ == "__main__":
     ll = A.get_news()
     with open("aaaaaaaaa.txt","w") as f:
         for i in ll:
-            f.write(i['title'])
-            f.write('\n')
+            f.write(i['contents'])
+            f.write('\n\n\n')
         
     print(ll)
 

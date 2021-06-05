@@ -175,6 +175,9 @@ class Jungang_crawling:
             contents = self.read_article_contents(url)
             if(contents==""):
                 continue
+            find_email = re.compile('[a-zA-Z0-9_-]+@[a-z]+.[a-z]+').finditer(contents)
+            for email in find_email:
+                contents = contents[:email.start()]
             article_info["category"] = category
             article_info["contents"] = contents
             article_info["title"] = title
