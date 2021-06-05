@@ -13,11 +13,6 @@ class KeywordsListView(ListView):
 	def get(self, request, category_id):
 		category = Category.objects.filter(id=category_id).values('category')[0]['category']
 
-		category_object = Category.objects.filter(pk=category_id)
-		category_object.update(
-		  topics={1: [ ['k1', 'k11'], {11: 0.1, 22: 0.2, 35555:0.3} ] , 2: [ ['k2', 'k22', 'k222'], {10: 1, 11: 1.1, 12: 1.2} ] }
-		)
-
 		# queryset: dict {1: ['k1', ,,,], 2: ['k2', ,,,], ,,,}
 		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
 		keywords_json = {}
@@ -41,20 +36,22 @@ class KeywordsDetailView(DetailView):
 
 	def get(self, request, category_id, keyword):  # type(keyword): str				
 		queryset = []
-		category = Category.objects.filter(pk=category_id)
+		category = Category.objects.filter(pk=category_id).values('category')[0]['category']
 		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
 		topics = Category.objects.filter(pk=category_id).values('topics')[0]['topics']
+		keywords_list = []
 		
 		if topics:
 			for v in topics.values():
 				# v[1].keys() -> article id
 				if keyword in v[0]:  # ['k1', ,,,]
+					keywords_list = v[0]
 					for id in v[1].keys():
 						article = Article.objects.filter(pk=id).first()
 						if article:
 							queryset.append(article)
 
-		return render(request, self.template_name, {'articles_list': queryset, 'category': category, 'keyword': keyword})
+		return render(request, self.template_name, {'articles_list': queryset, 'category_id': category_id, 'category': category, 'keyword': keyword, 'keywords_list': keywords_list})
 
 
 
