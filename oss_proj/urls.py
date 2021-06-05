@@ -15,14 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from crawling.views import CategoryListView, CategoryDetailView, ArticleListView, ArticleDetailView
+from django.urls.conf import include
+
+from crawling.views import CategoryListView
+import keywords.urls
+import summary.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', CategoryListView.as_view(), name = 'index'),
-
-    path('keywords/<int:category_id>', CategoryDetailView.as_view(), name='category_keywords'),
-    path('articles/<int:category_id>/<keyword>', ArticleListView.as_view(), name='article_list'),  # (?P<keyword>[\w-]+)/$
-    path('summary/<int:article_id>', ArticleDetailView.as_view(), name='summary'),
+    path('keywords/', include(keywords.urls)),
+    path('summary/', include(summary.urls)),
+    
 ]
 
