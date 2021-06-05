@@ -65,7 +65,6 @@
                             <tbody>
                                 {% for article in articles_list %}
                                 <tr>
-                                    <!-- <td>{{ article.title }}</td> -->
                                     <td><a href="{% url 'summary' article.id %}">{{ article.title }}</a></td>
                                     <td>{{ article.category }}</td>
                                     <td><a href="{{ article.url }}">{{ article.url }}</a></td>

@@ -22,11 +22,11 @@ def politic_crawling():
     ytn = YTN_crawling()
     asia.category_crawling(1)
     asia_list = asia.get_news()
-    print(asia_list)
+    # print(asia_list)
     # print('아시아끝')
     jungang.category_crawling(1)
     jungang_list = jungang.get_news()
-    print(jungang_list)
+    # print(jungang_list)
     # print('중앙끝')
     moneytoday.category_crawling(1)
     moneytoday_list = moneytoday.get_news()
@@ -49,7 +49,7 @@ def politic_crawling():
     ytn_list = ytn.get_news()
     politic_list = asia_list+donga_list+hangyere_list+herreld_list+jungang_list+kukmin_list+kyeonghang_list+moneytoday_list+neil_list+ytn_list
     # politic_list = asia_list+jungang_list+moneytoday_list+herreld_list+hangyere_list
-    print(politic_list)
+    # print(politic_list)
     return politic_list
 
 def economic_crawling():

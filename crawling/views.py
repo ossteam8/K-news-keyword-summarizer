@@ -16,15 +16,14 @@ class CategoryListView(ListView):
 	
 	def get(self, request):
 		category_list = Category.objects.all()
+
 		num_of_articles = {}
 		for i in range(7):
 			week_date = datetime.datetime.now() - datetime.timedelta(days=i)
-			
 			articles = Article.objects.filter(register_date__date=week_date)
-			num_of_articles[str(i)] = articles.count()
+			num_of_articles[str(i+1)] = articles.count()
 		num_of_articles = json.dumps(num_of_articles)
-		print(num_of_articles)
-		return render(request, self.template_name, {'category_list': category_list,'num_of_articles':num_of_articles})
+		return render(request, self.template_name, {'category_list': category_list, 'num_of_articles': num_of_articles})
 
 
 # category 선택 시, 해당 category 의 keywords 를 보여줌!
@@ -34,8 +33,15 @@ class CategoryDetailView(DetailView):
 	def get(self, request, category_id):
 		category = Category.objects.filter(id=category_id).values('category')[0]['category']
 
-		# queryset: dict {'k1': w1, 'k2': w2, 'k3': w3, ...}
-		keywords_json = json.dumps(Category.objects.filter(id=category_id).values('keywords')[0]['keywords'])
+		# queryset: dict {1: ['k1', ,,,], 2: ['k2', ,,,], ,,,}
+		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
+		keywords_json = {}
+		print(keywords_queryset)
+		for k, v in keywords_queryset.items():
+			
+			keywords_json[v[0]] = k
+		keywords_json = json.dumps(keywords_json)
+
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
 		articles_list = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
 
@@ -48,23 +54,26 @@ class CategoryDetailView(DetailView):
 class ArticleListView(ListView):
 	template_name = 'crawling/articles.html'
 
-	def get(self, request, category_id, keyword):  # type(keyword): str
-		category = Category.objects.filter(pk=category_id).values('category')[0]['category']
-		
-		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
-		articles = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
-		
+	def get(self, request, category_id, keyword):  # type(keyword): str				
 		queryset = []
-		# print(list(articles.values('top_keywords')))
-		# for k, o in zip_longest(list(articles.values('top_keywords')), articles):
-		# 	# top_keywords = list(articles.values('top_keywords'))
-		# 	# print(top_keywords)
-		# 	print(k['top_keywords'].values())
-		# 	if k['top_keywords'].values() and keyword in k['top_keywords'].values():
-		# 		queryset.append(o)  # 해당 키워드를 top_keywords에 포함하고 있는 객체만 append
-		# 		print("queryset",queryset)
-		# 		continue
+		category = Category.objects.filter(pk=category_id)
+		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
+		print(Category.objects.filter(pk=category_id).values('topics')[0])
+		topics = Category.objects.filter(pk=category_id).values('topics')[0]['topics']
+		category_object = Category.objects.filter(pk=category_id)
+		category_object.update(
+			topics={1: [ ['k1', 'k11'], {11: 0.1, 22: 0.2, 35555:0.3} ] , 2: [ ['k2', 'k22', 'k222'], {10: 1, 11: 1.1, 12: 1.2} ] }
+		)
+		for v in topics.values():
+			# v[1].keys() -> article id
+			if keyword in v[0]:  # ['k1', ,,,]
+				for id in v[1].keys():
+					article = Article.objects.filter(pk=id).first()
+					if article:
+						queryset.append(article)
 
+		print(queryset)
+			
 		return render(request, self.template_name, {'articles_list': queryset, 'category': category, 'keyword': keyword})
 
 
@@ -77,7 +86,6 @@ class ArticleDetailView(DetailView):
 		queryset = Article.objects.filter(pk=article_id).first()
 		
 		return render(request, self.template_name, {'article':queryset})
-
 
 
 # crontab 에서 실행한 함수에서 save_articles()로 article list 넘겨줌
@@ -107,18 +115,21 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 	else:
 		print('wrong category')
 
-	id_query = Article.objects.filter(category=category_object).values_list('id', flat=True).order_by('id')
-	article_id_list = list(id_query)
-	article_contents_list = []
-	for article_id in article_id_list:
-		contents_query = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
-		article_contents_list.append(contents_query)
+	try:
+		id_query = Article.objects.filter(category=category_object).values_list('id', flat=True).order_by('id')
+		article_id_list = list(id_query)
+		article_contents_list = []
+		for article_id in article_id_list:
+			contents_query = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
+			article_contents_list.append(contents_query)
+	except:
+		return None, None
 
 	return article_id_list, article_contents_list
 
 
 # topics 저장
-def save_topics(category, topics):
+def save_topics(category, topics, topics_num):
 	# category 분류
 	if category == '정치':
 		category_object = Category.objects.filter(category=category)
@@ -129,6 +140,19 @@ def save_topics(category, topics):
 	else:
 		print('wrong category')
 	
-	category_object.update(
-		topics = topics
-	)
+	try:
+		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
+		keywords = {}
+		for _, k, v in zip(range(topics_num), topics.items()):
+			keywords[k] = v[0]  # {1: ['k1', ,,,]}
+		# topics, keywords 저장
+		category_object.update(
+			topics=topics,
+			keywords=keywords,
+		)
+			
+	except:
+		return False
+
+	return True
+
