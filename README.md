@@ -26,13 +26,13 @@ In secrets.json, you must write SECRET_KEY. Like:**
 **In my_settings.py, you must write information of DATABASE. Like:**
 ```python
 DATABASES = {
-	'default': { 
-		'ENGINE':'django.db.backends.mysql', # mysql engine
-		'NAME':'oss', # database name
+    'default': { 
+        'ENGINE':'django.db.backends.mysql', # mysql engine
+        'NAME':'oss', # database name
 		'USER':'root', # user name when connected database
 		'PASSWORD':'PASSWORD',# user password
-        	'HOST':'127.0.0.1', # database server address
-        	'PORT':'3306' # database server port
+        'HOST':'127.0.0.1', # database server address
+        'PORT':'3306' # database server port
     }
 }
 ```
