@@ -1,5 +1,3 @@
-# from itertools import zip_longest
-# from .models import Category, Article
 from .crawling_py.main_crawling import run_crawling
 from .views import save_articles
 
