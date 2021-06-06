@@ -9,7 +9,8 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 ## Running project
 ### Software environment
 **OS : UBUNTU Lts 20.04**  
-**Python version==3.8.5**  
+**Python version==3.8.5**
+**Django version 3.2.4**
 If you have crontab error then check your OS first. 
 
 If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab. 
@@ -17,8 +18,8 @@ If you use Windows, crontab doesn't support Windows. So you must use Linux OS fo
 Also our python may not support python version under python3. We wish you use python version over 3.**
 
 ### Before running our project 
-**we use Django version 3.2.4 and mysql for viewing and save data, use BeautifulSoup4 and goose3 for crawling
-and used LDA in gensim and TextRank to extract keywords**  
+**Django version 3.2.4 and mysql for viewing and saving data, BeautifulSoup4 and Goose3 for crawling
+and LDA in gensim and TextRank to extract keywords**  
 **so if you want to run our project you need some packages.**  
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
 ### In order to install **Mecab** please use the line below at your terminal
