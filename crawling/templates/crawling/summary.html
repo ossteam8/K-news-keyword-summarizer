@@ -29,7 +29,7 @@
                                 <tr>
                                     <td>{{ article.title }}</td>
                                     <td>{{ article.category }}</td>
-                                    <td><a href="{{ article.url }}">{{ article.url }}</a></td>
+                                    <td><a href="{{ article.url }}" target="_blank">{{ article.url }}</a></td>
                                     <td>{{ article.register_date }}</td>
                                 </tr>
                                {% endif %}
@@ -59,7 +59,7 @@
                         <div class="card-body" >
                             {% if article.summary %}
                                 {{ article.summary }}
-                            {% elif %}
+                            {% else %}
                                 {{ summary }}
                             {% endif %}
                         </div>

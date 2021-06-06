@@ -61,9 +61,9 @@
                             <tbody>
                                 {% for article in articles_list %}
                                 <tr>
-                                    <td onclick="location.href='/summary/{{ article.id }}'">{{ article.title }}</td>
+                                    <td onclick="location.href='/summary/{{ article.id }}'" style="cursor: pointer;">{{ article.title }}</td>
                                     <td>{{ article.category }}</td>
-                                    <td><a href="{{ article.url }}">{{ article.url }}</a></td>
+                                    <td><a href="{{ article.url }}" target="_blank">{{ article.url }}</a></td>
                                     <td>{{ article.register_date }}</td>
                                 </tr>
                                {% endfor %}
