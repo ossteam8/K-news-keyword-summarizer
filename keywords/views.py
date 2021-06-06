@@ -6,47 +6,41 @@ from django.views.generic.detail import DetailView
 from crawling.models import Article, Category
 
 
-# category 선택 시, 해당 category 의 keywords 를 보여줌!
+#!/usr/bin/env python
+# coding: utf-8
+import pyLDAvis.gensim_models as gensimvis
+import warnings
+warnings.filterwarnings(action='ignore')
+from gensim.models import LdaModel
+
+
 class KeywordsListView(ListView):
 	template_name = 'crawling/keywords_list.html' 
 
 	def get(self, request, category_id):
-		category = Category.objects.filter(id=category_id).values('category')[0]['category']
-		# (Category.objects.filter(pk=category_id)).update(
-		#   topics={1: [ ['k1', 'k11'], {11: 0.1, 22: 0.2, 35555:0.3} ] , 2: [ ['k2', 'k22', 'k222'], {10: 1, 11: 1.1, 12: 1.2} ] }
-		# )
-		# (Category.objects.filter(pk=category_id)).update(
-		#   keywords={1: ['k1', 'k11'], 2: ['k2', 'k22', 'k222'] }
-		# )
-		
-
-		# queryset: dict {1: ['k1', ,,,], 2: ['k2', ,,,], ,,,}
-		keywords_queryset = Category.objects.filter(id=category_id).values('keywords')[0]['keywords']
+		category = Category.objects.get(id=category_id).category
+		keywords_queryset = Category.objects.get(id=category_id).keywords
 		keywords_json = {}
 		if keywords_queryset:
-			for k, v in keywords_queryset.items():
-				keywords_json[v[0]] = k
-		
+			for idx, value in zip(range(len(keywords_queryset)), keywords_queryset.values()):
+				keywords_json[idx+1]= value[0:3]
+
 		keywords_json = json.dumps(keywords_json)
-		
-		a=datetime.datetime.now()-datetime.timedelta(days=1)
+
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
 		articles_list = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
 
 		return render(request, self.template_name, {'category_id': category_id, 'category': category, 'articles_list': articles_list, 'keywords_json': keywords_json})
 
 
-# 키워드 선택 -> 기사 나열!!  
-# prefetch_related: 역방향 참조 이용해서 해당 카테고리에 있는 article을 가져와야함.
-# 기사 가져올 때 해당 키워드가 있어야 함
+
 class KeywordsDetailView(DetailView):
 	template_name = 'crawling/keywords_detail.html'
 
 	def get(self, request, category_id, keyword):  # type(keyword): str				
 		queryset = []
-		category = Category.objects.filter(pk=category_id).values('category')[0]['category']
-		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
-		topics = Category.objects.filter(pk=category_id).values('topics')[0]['topics']
+		category = Category.objects.get(pk=category_id).category
+		topics = Category.objects.get(pk=category_id).topics
 		keywords_list = []
 		
 		if topics:
@@ -61,6 +55,60 @@ class KeywordsDetailView(DetailView):
 
 		return render(request, self.template_name, {'articles_list': queryset, 'category_id': category_id, 'category': category, 'keyword': keyword, 'keywords_list': keywords_list})
 
+
+# NLP에 필요한 기사 return
+def get_articles(category):  # category -> '정치' or '경제' or '사회'
+	# category 분류
+	if category == '정치':
+		category_object = Category.objects.filter(category=category).first()
+	elif category == '경제':
+		category_object = Category.objects.filter(category=category).first()
+	elif category == '사회':
+		category_object = Category.objects.filter(category=category).first()
+	else:
+		print('wrong category')
+
+	try:
+		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
+		article_id_list = list(Article.objects.filter(register_date__gte=week_date, category=category_object).values_list('id', flat=True).order_by('id'))
+		article_contents_list = []
+		for article_id in article_id_list:
+			article_obj = Article.objects.get(pk=article_id)
+			query = article_obj.contents + article_obj.title
+			article_contents_list.append(query)
+	except:
+		return None, None
+
+	return article_id_list, article_contents_list
+
+
+# topics 저장
+def save_topics(category, topics, topics_num):
+	topics = sorted(topics.items(), key=lambda x: len(x[1][1]), reverse=True)
+	# category 분류
+	if category == '정치':
+		category_object = Category.objects.filter(category=category)
+	elif category == '경제':
+		category_object = Category.objects.filter(category=category)
+	elif category == '사회':
+		category_object = Category.objects.filter(category=category)
+	else:
+		print('wrong category')
+	
+	try:
+		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
+		keywords = {}
+		for _, k, v in zip(range(topics_num), topics.items()):
+			keywords[k] = v[0]  # {1: ['k1', ,,,]}
+		# topics, keywords 저장
+		category_object.update(
+			topics=topics,
+			keywords=keywords,
+		)
+	except:
+		return False
+
+	return True
 
 
 
