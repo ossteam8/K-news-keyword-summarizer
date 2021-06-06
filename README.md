@@ -46,7 +46,7 @@ DATABASES = {
  $ python3 manage.py migrate
 ```
 
-**If you finish these migate without errors then run server**  
+**If you finish these migrate without errors then run server**  
 ```
  $ python3 manage.py runserver
 ```
