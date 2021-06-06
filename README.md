@@ -10,7 +10,10 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 ### Software environment
 **OS : UBUNTU Lts 20.04  
 Python version==3.8.5  
-If you have crontab error then check your OS first. If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab.  
+If you have crontab error then check your OS first. 
+
+If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab. 
+
 Also our python may not support python version under python3. We wish you use python version over 3.**
 
 ### Before running our project 
