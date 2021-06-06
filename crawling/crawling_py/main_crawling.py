@@ -22,21 +22,19 @@ def politic_crawling():
     ytn = YTN_crawling()
     asia.category_crawling(1)
     asia_list = asia.get_news()
-    # print(asia_list)
-    # print('아시아끝')
+    
     jungang.category_crawling(1)
     jungang_list = jungang.get_news()
-    # print(jungang_list)
-    # print('중앙끝')
+    
     moneytoday.category_crawling(1)
     moneytoday_list = moneytoday.get_news()
-    # print('머니투데이끝')
+    
     herreld.category_crawling(1)
     herreld_list = herreld.get_news()
-    # print('헤럴드끝')
+    
     hangyere.category_crawling(1)
     hangyere_list = hangyere.get_news()
-    # print('한겨레끝')
+    
     donga.category_crawling(1)
     donga_list = donga.get_news()
     kukmin.category_crawling(1)
@@ -66,16 +64,16 @@ def economic_crawling():
     # print('아시아끝')
     jungang.category_crawling(2)
     jungang_list = jungang.get_news()
-    # print('중앙끝')
+    
     moneytoday.category_crawling(2)
     moneytoday_list = moneytoday.get_news()
-    # print('머니투데이끝')
+    
     herreld.category_crawling(2)
     herreld_list = herreld.get_news()
-    # print('헤럴드끝')
+    
     hangyere.category_crawling(2)
     hangyere_list = hangyere.get_news()
-    # print('한겨레끝')
+    
     donga.category_crawling(2)
     donga_list = donga.get_news()
     kukmin.category_crawling(2)
@@ -102,20 +100,18 @@ def society_crawling():
     ytn = YTN_crawling()
     asia.category_crawling(3)
     asia_list = asia.get_news()
-    # print('아시아끝')
+    
     jungang.category_crawling(3)
     jungang_list = jungang.get_news()
-    # print('중앙끝')
-    # print('머니투데이 시작')
+    
     moneytoday.category_crawling(3)
     moneytoday_list = moneytoday.get_news()
-    # print('머니투데이끝')
+    
     herreld.category_crawling(3)
     herreld_list = herreld.get_news()
-    # print('헤럴드끝')
+    
     hangyere.category_crawling(3)
     hangyere_list = hangyere.get_news()
-    # print('한겨레끝')
     donga.category_crawling(3)
     donga_list = donga.get_news()
     kukmin.category_crawling(3)

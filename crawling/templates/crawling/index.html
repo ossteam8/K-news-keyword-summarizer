@@ -10,13 +10,34 @@
             <div class="row">
                 {% for category in category_list %}
                 <div class="col-xl-3 col-md-6">
-                    <div class="card bg-info text-white mb-4">
+                    {% if category.category == "정치" %}
+                    <div class="card bg-primary text-white mb-4">
                         <div class="card-body">{{ category.category }}</div>  
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="{% url 'keywords_list' category.id %}">View Keywords</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
+                    
+                    {% elif category.category == "경제" %}
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body">{{ category.category }}</div>  
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{% url 'keywords_list' category.id %}">View Keywords</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                    
+                    {% elif category.category == "사회" %}
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">{{ category.category }}</div>  
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{% url 'keywords_list' category.id %}">View Keywords</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                    
+                    {% endif %}
                 </div>
                 {% endfor %}
                 
