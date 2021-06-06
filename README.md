@@ -16,7 +16,7 @@ and used LDA in gensim and TextRank to extract keywords**
 ```
 $ bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
 ```
-### After install packages
+### After installing packages
 **you must create secrets.json and my_settings.py in same locate of manage.py
 In secrets.json, you must write SECRET_KEY. Like:**
 ```python
