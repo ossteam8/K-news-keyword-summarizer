@@ -8,9 +8,12 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 
 ## Running project
 ### Software environment
-**OS : UBUNTU Lts 20.04**  
+**OS : UBUNTU Lts 20.04** 
+
 **Python version==3.8.5**
-**Django version 3.2.4**
+
+**Django version==3.2.4**
+
 If you have crontab error then check your OS first. 
 
 If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab. 
