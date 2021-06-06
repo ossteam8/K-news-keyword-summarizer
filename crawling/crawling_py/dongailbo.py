@@ -1,30 +1,18 @@
 import re
-# import time
-# import sys
 from goose3 import Goose
-# import pickle
 from goose3.text import StopWordsKorean
-# import requests
 from bs4 import BeautifulSoup
-# import urllib.request
-# import urllib.parse
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-# from .categoryparser import Parse_category
 from urllib.request import Request, urlopen
 
 class Donga_crawling:
-    #type = 1: 카테고리만 입력
-
     def __init__(self): 
-
         self.categories = ['정치','경제','사회']
         self.article_url = ""
         self.urls = []
-        # self.article_info = {"title":"","contents":"","url":"","category":""}  # 각 기사의 정보들
         self.articles = [] # 각 기사들의 정보들을 담을 리스트
         self.check_valid = True # 검색했을때 나오는 데이터가 나오는지 안나오는지를 비교
-        self.num_article = 0
         self.choose_category=1
     def get_date(self, now):
         now = str(now)
@@ -39,57 +27,38 @@ class Donga_crawling:
         while(not News_end):
             try:
                 req = Request(self.article_url,headers={'User-Agent': 'Mozilla/5.0'})
-            
                 with urlopen(req) as response:
-                
                     html = response.read()
                     soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
-
                     #기사의 url들을 파싱하는 부분
-
-
                     article_list = soup.find("div",{"id":"container"})
                     #article_list = article_list.find("div",{"id":"content"})# 안된다면 이부분을 넣자
-
-
                     try:
                         article_list = article_list.find_all("div",{"class":"articleList"})
-
                     except:
                         self.check_valid=False
                         print("리스트 읽어오기 실패")
                         return    
-
                     try:
                         for article in article_list:
                             link = article.find("a")
                             self.urls.append(link['href'])
-                          #  print(link['href'])
                     except:
                         print("url 찾기 실패")
                         return
-
-                    #try:
                     next_url = ""
                     try:
                         pages = soup.find("div",{"id":"container"})
                         pages = pages.find("div",{"class":"page"})
                         current_page = pages.find("strong").string  # 현재 페이지 찾음
                         next_button = pages.find("a",{"class":"right"})
-
-                        #next_button = pages.find("a",{"class":"btn_next"})
                         pages = pages.find_all("a")
-                    
-                        #print(pages)
                         for page in pages:
                             if page.string != "다음" and page.string!="이전":
-
                                 if(int(current_page)<=int(page.string)):
-
                                     if(self.choose_category == 1):
                                         next_url =  "https://www.donga.com/news/List/Politics"+page['href']
                                     elif(self.choose_category ==2):
-                                        # print('dsd')
                                         next_url =  "https://www.donga.com/news/List/Economy"+page['href']
                                     else:
                                         next_url =  "https://www.donga.com/news/List/Society"+page['href']
@@ -98,7 +67,6 @@ class Donga_crawling:
                             pass
                         else: #다음 화살표 누르기
                             if(str(next_button['href']).startswith('?p=none',0,7)):
-                                # print("크롤링 끝")
                                 News_end = True
                             else:
                                 if(self.choose_category == 1):
@@ -120,7 +88,6 @@ class Donga_crawling:
 
     def category_crawling(self, choose_category):
         #동아일보는 url에 날짜를 넣으면 그 날짜만 가져온다
-
         now = datetime.now()-relativedelta(days=1) # 실제엔 relative(days=1)을 빼자
         now = self.get_date(now)
         if choose_category==1: #정치
@@ -138,7 +105,6 @@ class Donga_crawling:
     def read_article_contents(self,url):
         try:
             req = Request(url,headers={'User-Agent': 'Mozilla/5.0'})
-        
             with urlopen(req) as response:
                 html = response.read()
                 soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
@@ -173,6 +139,7 @@ class Donga_crawling:
             contents = self.read_article_contents(url)
             if contents =="":
                 continue
+            #기사의 기자 이메일을 찾아 그 뒤는 필요없는 내용이므로 삭제
             find_email = re.compile('[a-zA-Z0-9_-]+@[a-z]+.[a-z]+').finditer(contents)
             for email in find_email:
                 contents = contents[:email.start()]
@@ -181,17 +148,10 @@ class Donga_crawling:
             article_info["title"] = title
             article_info["url"] = url
             self.articles.append(article_info)
-            self.num_article+=1
-
         return self.articles    
         
 
 if __name__ == "__main__":
-
-    # 단순 카테고리만 할시에는 jungang_crawling(1)이것으로 초기화를하고,
-    # category_crawling( 카테고리 번호 )에서 카테고리 번호를 넣어준다(외부에서 받아올 예정)
-    # 그리고 그 번호를 get_news에다가도 넣어준다
-
     A = Donga_crawling()
     A.category_crawling(3)
     ll = A.get_news()
