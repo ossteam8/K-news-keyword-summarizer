@@ -59,6 +59,8 @@
                         <div class="card-body" >
                             {% if article.summary %}
                                 {{ article.summary }}
+                            {% elif %}
+                                {{ summary }}
                             {% endif %}
                         </div>
                             

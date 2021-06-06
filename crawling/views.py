@@ -5,8 +5,6 @@ from itertools import zip_longest
 
 from .models import Article, Category
 
-import pickle
-
 
 class CategoryListView(ListView):
 	template_name = 'crawling/index.html' 
@@ -43,57 +41,5 @@ def save_articles(politic_article_list, economy_article_list, society_article_li
 	return True
 
 
-# NLP에 필요한 기사 return
-def get_articles(category):  # category -> '정치' or '경제' or '사회'
-	# category 분류
-	if category == '정치':
-		category_object = Category.objects.filter(category=category).first()
-	elif category == '경제':
-		category_object = Category.objects.filter(category=category).first()
-	elif category == '사회':
-		category_object = Category.objects.filter(category=category).first()
-	else:
-		print('wrong category')
 
-	try:
-		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
-		article_id_list = list(Article.objects.filter(register_date__gte=week_date, category=category_object).values_list('id', flat=True).order_by('id'))
-		article_contents_list = []
-		for article_id in article_id_list:
-			article_obj = Article.objects.get(pk=article_id)
-			query = article_obj.contents + article_obj.title
-			article_contents_list.append(query)
-	except:
-		return None, None
-
-	return article_id_list, article_contents_list
-
-
-
-# topics 저장
-def save_topics(category, topics, topics_num):
-	# category 분류
-	if category == '정치':
-		category_object = Category.objects.filter(category=category)
-	elif category == '경제':
-		category_object = Category.objects.filter(category=category)
-	elif category == '사회':
-		category_object = Category.objects.filter(category=category)
-	else:
-		print('wrong category')
-	
-	try:
-		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
-		keywords = {}
-		for _, k, v in zip(range(topics_num), topics.items()):
-			keywords[k] = v[0]  # {1: ['k1', ,,,]}
-		# topics, keywords 저장
-		category_object.update(
-			topics=topics,
-			keywords=keywords,
-		)
-	except:
-		return False
-
-	return True
 
