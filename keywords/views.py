@@ -28,7 +28,8 @@ class KeywordsListView(ListView):
 				keywords_json[v[0]] = k
 		
 		keywords_json = json.dumps(keywords_json)
-
+		
+		a=datetime.datetime.now()-datetime.timedelta(days=1)
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
 		articles_list = Article.objects.prefetch_related('category').filter(register_date__gte=week_date, category_id=category_id).order_by('register_date')
 

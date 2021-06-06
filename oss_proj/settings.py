@@ -69,7 +69,7 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    ('* 0 * * *', 'crawling.cron.article_crawling_job', '>> /Users/jjaen/scheduled_job.log'),
+    ('10 15 * * *', 'crawling.cron.article_crawling_job', '>> /Users/jjaen/scheduled_job.log'),
     # keyword 추출하는 cron도 등록해야 함.
 ]
 

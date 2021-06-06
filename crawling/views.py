@@ -60,9 +60,8 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 		article_id_list = list(Article.objects.filter(register_date__gte=week_date, category=category_object).values_list('id', flat=True).order_by('id'))
 		article_contents_list = []
 		for article_id in article_id_list:
-			title = Article.objects.filter(pk=article_id).values('title')[0]['title']  # str
-			contents = Article.objects.filter(pk=article_id).values('contents')[0]['contents']  # str
-			query = contents + title
+			article_obj = Article.objects.get(pk=article_id)
+			query = article_obj.contents + article_obj.title
 			article_contents_list.append(query)
 	except:
 		return None, None
