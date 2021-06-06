@@ -20,7 +20,7 @@ Also our python may not support python version under python3. We wish you use py
 ### Before running our project 
 **Django version 3.2.4 and mysql for viewing and saving data, BeautifulSoup4 and Goose3 for crawling
 and LDA in gensim and TextRank to extract keywords**  
-**so if you want to run our project you need some packages.**  
+
 ### We wish you read our [requirements.txt](requirements.txt) for install packages
 ### In order to install **Mecab** please use the line below at your terminal
 ```
