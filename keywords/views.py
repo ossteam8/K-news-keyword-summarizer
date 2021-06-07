@@ -88,8 +88,6 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 
 # topics 저장
 def save_topics(category, topics, topics_num):
-	print(topics)
-	
 	topics = dict(sorted(topics.items(), key=lambda x: len(x[1][1]), reverse=True))
 	# category 분류
 	if category == '정치':
@@ -105,13 +103,9 @@ def save_topics(category, topics, topics_num):
 		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
 		keywords = {}
 		for _, k in zip(range(topics_num), topics.keys()):
-			# print('asdasdasdasdasd')
-			keywords[k] = topics[k][0]  # {1: ['k1', ,,,]}
+			article_num = len(topics[k][1])
+			keywords[k] = [article_num,topics[k][0]]  # {1: ['k1', ,,,]}
 		# topics, keywords 저장
-		print()
-		print()
-		print()
-		print('keywords',keywords)
 		category_object.update(
 			topics=topics,
 			keywords=keywords,
