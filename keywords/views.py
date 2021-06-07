@@ -58,6 +58,7 @@ class KeywordsDetailView(DetailView):
 		if topics:
 			if topic_num in topics.keys():
 				keywords_list = topics[topic_num][0]
+				keyword = keywords_list[0]
 				for id in topics[topic_num][1].keys():
 					article = Article.objects.filter(pk=id).first()
 					if article:
