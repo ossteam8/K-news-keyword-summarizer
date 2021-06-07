@@ -20,11 +20,15 @@ class KeywordsListView(ListView):
 	def get(self, request, category_id):
 		category = Category.objects.get(id=category_id).category
 		keywords_queryset = Category.objects.get(id=category_id).keywords
+		t = Category.objects.get(id=category_id).topics
+		# print("adfadf",keywords_queryset)
+		# print("adfadf",t)
+		
 		keywords_json = {}
 		if keywords_queryset:
 			for idx, value in zip(range(len(keywords_queryset)), keywords_queryset.values()):
 				keywords_json[idx+1]= value[0:3]
-
+		print(keywords_json)
 		keywords_json = json.dumps(keywords_json)
 
 		week_date = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -84,7 +88,9 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 
 # topics 저장
 def save_topics(category, topics, topics_num):
-	topics = sorted(topics.items(), key=lambda x: len(x[1][1]), reverse=True)
+	print(topics)
+	
+	topics = dict(sorted(topics.items(), key=lambda x: len(x[1][1]), reverse=True))
 	# category 분류
 	if category == '정치':
 		category_object = Category.objects.filter(category=category)
@@ -98,16 +104,22 @@ def save_topics(category, topics, topics_num):
 	try:
 		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
 		keywords = {}
-		for _, k, v in zip(range(topics_num), topics.items()):
-			keywords[k] = v[0]  # {1: ['k1', ,,,]}
+		for _, k in zip(range(topics_num), topics.keys()):
+			# print('asdasdasdasdasd')
+			keywords[k] = topics[k][0]  # {1: ['k1', ,,,]}
 		# topics, keywords 저장
+		print()
+		print()
+		print()
+		print('keywords',keywords)
 		category_object.update(
 			topics=topics,
 			keywords=keywords,
 		)
-	except:
+	except Exception as e:
+		print(e)
 		return False
-
+	print('end')
 	return True
 
 

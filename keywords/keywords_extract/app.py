@@ -1,6 +1,6 @@
-from preprocessor import Preprocessor
-from LDAkey_extractor import LDAKeyExtractor
-from textrank import TextRank
+from .preprocessor import Preprocessor
+from .LDAkey_extractor import LDAKeyExtractor
+from .textrank import TextRank
 import pickle
 from multiprocessing import freeze_support
 import time
@@ -22,15 +22,19 @@ class LDA_TR:
         textrank = TextRank(corp_doc_topic)
         print("textrank done")
         keywords = textrank.extract_keyword()
+        print(len(keywords))
         print("keyword extracted")
         ext_topic_cluster = dict()
-        print("힝")
-        for i in range(1, NUM_TOPICS+1):
+        for i in range(1, len(keywords)+1):
             top_save = dict()
             for j in range(len(topic_docs_save[i])):
                 top_save[topic_docs_save[i][j][0]] = topic_docs_save[i][j][1]
-            ext_topic_cluster[i] = [keywords[i - 1], top_save]
-        return ext_topic_cluster, NUM_TOPICS
+            save_key = []
+            for l in range(len(keywords[i-1])):
+                save_key.append(keywords[i-1][l][2])
+            ext_topic_cluster[i] = [list(sorted(save_key, key=lambda x: len(x), reverse=True)), dict(sorted(top_save.items(), key=lambda x: x[1],reverse=True))]
+            print(ext_topic_cluster)
+        return ext_topic_cluster, len(keywords)
 
 
 def run():

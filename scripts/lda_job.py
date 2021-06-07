@@ -1,10 +1,11 @@
 from multiprocessing import freeze_support
 
-from .views import get_articles, save_topics
-from .keywords_extract.app import LDA_TR
+from keywords.views import get_articles, save_topics
+from keywords.keywords_extract.app import LDA_TR
 
-def lda_job():
-    print("start")    
+def run():
+    print("start")
+    
     freeze_support()
     lda_tr = LDA_TR()
     print("start 2")
@@ -12,8 +13,7 @@ def lda_job():
     for c in category:
         id_news, news = get_articles(c)
         etc, num = lda_tr.save_topics(news, id_news)
-        print('타입 : ', etc)
+        # print('타입 : ',etc)
         save_topics(c, etc, num)
     
 
-    

@@ -21,7 +21,7 @@ warnings.filterwarnings(action='ignore')
 
 class Preprocessor:
     def __init__(self):
-        f = open("stop.txt", 'r')
+        f = open("/home/ddtthh/바탕화면/ㅐㄴㄴ/oss8_proj/keywords/keywords_extract/stop.txt", 'r')
         self.stop_words = f.read().split(',')
         f.close()
 
@@ -74,7 +74,7 @@ class Preprocessor:
             model = gensim.models.ldamodel.LdaModel(corpus = corpus, id2word=id2word, num_topics=i)
             coherence_model = CoherenceModel(model, texts=bigram_document, dictionary=id2word, coherence='c_v')
             coherence_lda = coherence_model.get_coherence()
-            print('n=', i, '\nCoherence Score: ', coherence_lda)
+            #print('n=', i, '\nCoherence Score: ', coherence_lda)
             coherence_score.append(coherence_lda)
         co_sc = np.array(coherence_score)
         NUM_TOPICS = np.argmax(co_sc) + t_min
