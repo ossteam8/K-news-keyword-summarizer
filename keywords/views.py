@@ -18,10 +18,22 @@ class KeywordsListView(ListView):
 	template_name = 'crawling/keywords_list.html' 
 
 	def get(self, request, category_id):
-		category = Category.objects.get(id=category_id).category
+		category = Category.objects.get(id=category_id) #.category
 		keywords_queryset = Category.objects.get(id=category_id).keywords
-		# t = Category.objects.get(id=category_id).topics
+		topics = Category.objects.get(id=category_id).topics
 		# {topic num: [기사 개수, 'k1']}
+
+		keywords = {}
+		for _, k in zip(range(8), topics.keys()):
+			article_num = len(topics[k][1])
+			keywords[k] = [article_num, topics[k][0]]  # {1: [기사 개수, 'k1', ,,,]}
+		# topics, keywords 저장
+		print('keywords',keywords)
+		category.update(
+			# topics=topics,
+			keywords=keywords,
+		)
+
 		keywords_json = {}
 		if keywords_queryset:
 			for idx, value in zip(range(len(keywords_queryset)), keywords_queryset.values()):
