@@ -18,13 +18,24 @@ class KeywordsListView(ListView):
 	template_name = 'crawling/keywords_list.html' 
 
 	def get(self, request, category_id):
-		category = Category.objects.get(id=category_id).category
+		category = Category.objects.get(id=category_id) #.category
+		category_object = Category.objects.filter(category=category)
 		keywords_queryset = Category.objects.get(id=category_id).keywords
+		topics = Category.objects.get(id=category_id).topics
+		# {topic num: [기사 개수, 'k1']}
 		
+		keywords = {}
+		for _, k in zip(range(8), topics.keys()):
+			article_num = len(topics[k][1])
+			keywords[k] = [article_num] + topics[k][0]  # {1: [기사 개수, 'k1', ,,,]}
+		category_object.update(
+			keywords=keywords,
+		)
+
 		keywords_json = {}
 		if keywords_queryset:
 			for key, value in keywords_queryset.items():
-				keywords_json[key]= value[0:2]  # {1: [기사 개수, 'k1']}
+				keywords_json[key]= value[0:2]
 		print(keywords_json)
 		keywords_json = json.dumps(keywords_json)
 
@@ -99,7 +110,7 @@ def save_topics(category, topics, topics_num):
 		keywords = {}
 		for _, k in zip(range(topics_num), topics.keys()):
 			article_num = len(topics[k][1])
-			keywords[k] = [article_num, topics[k][0]]  # {1: [기사 개수, 'k1', ,,,]}
+			keywords[k] = [article_num] + topics[k][0]  # {1: [기사 개수, 'k1', ,,,]}
 		# topics, keywords 저장
 		print('keywords',keywords)
 		category_object.update(

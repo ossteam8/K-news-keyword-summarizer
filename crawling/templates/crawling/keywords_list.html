@@ -86,16 +86,16 @@
     <script type="text/javascript">
     // Set new default font family and font color to mimic Bootstrap's default styling
         var keywordset = JSON.parse('{{keywords_json|safe}}');
-        // for( keys in keywrodset){
-        //     console.log(keys + ": " + keywrodset[keys])
-        // }
         var key_list = [];
         var data_list = [];
+        var label_list = [];
         for(keys in keywordset){
             key_list.push(keys);
-            data_list.push(keywordset[keys]);
+            data_list.push(keywordset[keys][0]);
+            label_list.push(keywordset[keys][1]);
         }
-
+        // label_list.push('박범계','아스트라제네카','김효수교수님','김명호_교수님','홍병우교수님','김대원교수님','김무철교수님','박재현교수님','오픈소스프로젝트','김은우교수님','중앙대학교','이창하교수님')
+        // data_list.push(200,200,200,200,200,200,200,200,200,200,200,200)
         Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
         Chart.defaults.global.defaultFontColor = '#292b2c';
 
@@ -105,11 +105,12 @@
         var myLineChart = new Chart(ctx, {
           type: 'bar',
           data: {
-             labels: key_list,
+            topics: key_list,
+             labels: label_list,
              //["keyword_1", "keyword_2", "keyword_3", "keyword_4", "keyword_5", "keyword_6"],  // 카테고리에 기반한 키워드 종류 (10개? 정도)
             datasets: [{
             //   label: "Revenue",
-              backgroundColor: "rgba(2,117,216,1)",
+              backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#BBBBBB','#FFA500','#9900CC','#66CCFF','#99FFCC','#CCCCFF','#99CC00','#990066','#669933','#99FFFF','#FF00CC','#6600FF','#CC6600','#0000CC','#009900','#CCCCCC'],
               borderColor: "rgba(2,117,216,1)",
               data: data_list,  // keyword 가중치!
             }],
@@ -124,13 +125,13 @@
                   display: false
                 },
                 ticks: {
-                  maxTicksLimit: 10
+                  maxTicksLimit: 20
                 }
               }],
               yAxes: [{
                 ticks: {
                   min: 0,
-                  max: 1,
+                  max: 800,
                   maxTicksLimit: 10
                 },
                 gridLines: {
@@ -149,10 +150,10 @@
             var firstPoint = myLineChart.getElementAtEvent(evt)[0];
             if(firstPoint){
                 var category_id = "{{category_id}}";
-                var label = myLineChart.data.labels[firstPoint._index];
+                var topics = myLineChart.data.topics[firstPoint._index];
                 // var value = myLineChart.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
                 // alert(label);
-                location.href = "/keywords/"+category_id+"/"+label;
+                location.href = "/keywords/"+category_id+"/"+topics;
             }
         });
         
@@ -171,18 +172,22 @@
         var keywordset = JSON.parse('{{keywords_json|safe}}');
         var key_list = [];
         var data_list = [];
+        var label_list = [];
         for(keys in keywordset){
             key_list.push(keys);
-            data_list.push(keywordset[keys]);
+            data_list.push(keywordset[keys][0]);
+            label_list.push(keywordset[keys][1]);
         }
+        // label_list.push('박범계','아스트라제네카','김효수교수님','김명호_교수님','홍병우교수님','김대원교수님','김무철교수님','박재현교수님','오픈소스프로젝트','김은우교수님','중앙대학교','이창하교수님')
+        // data_list.push(200,200,200,200,200,200,200,200,200,200,200,200)
         var ctb = document.getElementById("myPieChart");
         var myPieChart = new Chart(ctb, {
           type: 'pie',
           data: {
-            labels: key_list,
+            labels: label_list,
             datasets: [{
               data: data_list,
-              backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#000000','#FFA500','#9900CC','#66CCFF','#99FFCC'],
+              backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#BBBBBB','#FFA500','#9900CC','#66CCFF','#99FFCC','#CCCCFF','#99CC00','#990066','#669933','#99FFFF','#FF00CC','#6600FF','#CC6600','#0000CC','#009900','#000000'],
             }],
           },
         });
