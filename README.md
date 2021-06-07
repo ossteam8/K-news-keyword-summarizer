@@ -14,7 +14,7 @@ top keywords를 뽑기 위하여 (무엇을 이용)이를 시각화해서 보여
 
 **Django version==3.2.4**
 
-If you have crontab error then check your OS first. 
+**If you have crontab error then check your OS** first. 
 
 If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab. 
 
@@ -63,6 +63,7 @@ DATABASES = {
 ```
  $ python3 manage.py runserver
 ```
+
 **Then you can use the website. But first you may not have any data of crawling, keywords.  
 Our project start crawling, and find keywords at 0:00 every day.  
 So just wait until 0:00 then it will start doing jobs with crontab.  
