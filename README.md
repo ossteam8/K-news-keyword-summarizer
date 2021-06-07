@@ -90,7 +90,7 @@ So if you have an issue of project, then make and submit new issue.**
 
 
 
-### sites for using crawling
+### Websites used in crawling
  - [중앙일보](https://joongang.joins.com/)
  - [한겨레](https://www.hani.co.kr/arti/list.html)
  - [헤럴드경제](http://biz.heraldcorp.com/)
