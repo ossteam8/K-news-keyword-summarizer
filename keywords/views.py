@@ -18,26 +18,13 @@ class KeywordsListView(ListView):
 	template_name = 'crawling/keywords_list.html' 
 
 	def get(self, request, category_id):
-		category = Category.objects.get(id=category_id) #.category
+		category = Category.objects.get(id=category_id).category
 		keywords_queryset = Category.objects.get(id=category_id).keywords
-		topics = Category.objects.get(id=category_id).topics
-		# {topic num: [기사 개수, 'k1']}
-
-		keywords = {}
-		for _, k in zip(range(8), topics.keys()):
-			article_num = len(topics[k][1])
-			keywords[k] = [article_num, topics[k][0]]  # {1: [기사 개수, 'k1', ,,,]}
-		# topics, keywords 저장
-		print('keywords',keywords)
-		category.update(
-			# topics=topics,
-			keywords=keywords,
-		)
-
+		
 		keywords_json = {}
 		if keywords_queryset:
-			for idx, value in zip(range(len(keywords_queryset)), keywords_queryset.values()):
-				keywords_json[idx+1]= value[0:2]
+			for key, value in keywords_queryset.items():
+				keywords_json[key]= value[0:2]  # {1: [기사 개수, 'k1']}
 		print(keywords_json)
 		keywords_json = json.dumps(keywords_json)
 
@@ -51,23 +38,21 @@ class KeywordsListView(ListView):
 class KeywordsDetailView(DetailView):
 	template_name = 'crawling/keywords_detail.html'
 
-	def get(self, request, category_id, keyword):  # type(keyword): str				
-		queryset = []
+	def get(self, request, category_id, topic_num):  # type(keyword): str				
+		articles_list = []
 		category = Category.objects.get(pk=category_id).category
 		topics = Category.objects.get(pk=category_id).topics
 		keywords_list = []
 		
 		if topics:
-			for v in topics.values():
-				# v[1].keys() -> article id
-				if keyword in v[0]:  # ['k1', ,,,]
-					keywords_list = v[0]
-					for id in v[1].keys():
-						article = Article.objects.filter(pk=id).first()
-						if article:
-							queryset.append(article)
+			if topic_num in topics.keys():
+				keywords_list = topics[topic_num][0]
+				for id in topics[topic_num][1].keys():
+					article = Article.objects.filter(pk=id).first()
+					if article:
+						articles_list.append(article)
 
-		return render(request, self.template_name, {'articles_list': queryset, 'category_id': category_id, 'category': category, 'keyword': keyword, 'keywords_list': keywords_list})
+		return render(request, self.template_name, {'articles_list': articles_list, 'category_id': category_id, 'category': category, 'keyword': keyword, 'keywords_list': keywords_list})
 
 
 # NLP에 필요한 기사 return
