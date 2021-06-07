@@ -8,7 +8,7 @@ from .kyeonghang import *
 from .moneyToday import *
 from .neilNews import *
 from .YTN import *
-
+from datetime import datetime
 def politic_crawling():
     asia = AsiaMoney_crawling()
     jungang = Jungang_crawling()
@@ -128,6 +128,7 @@ def society_crawling():
 
 
 def run_crawling():
+    print(datetime.now())
     #정치
     politic_article_list = politic_crawling()
     #경제

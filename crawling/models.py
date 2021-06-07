@@ -6,7 +6,7 @@ from picklefield.fields import PickledObjectField
 class Category(models.Model):
 	id = models.AutoField(primary_key=True)
 	category = models.CharField(max_length=64)
-	keywords = models.JSONField(default=dict, null=True, blank=True)
+	keywords = PickledObjectField(default=dict, null=True, blank=True)
 	# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
 	topics = PickledObjectField(null=True, blank=True)  
 
