@@ -20,14 +20,12 @@ class KeywordsListView(ListView):
 	def get(self, request, category_id):
 		category = Category.objects.get(id=category_id).category
 		keywords_queryset = Category.objects.get(id=category_id).keywords
-		t = Category.objects.get(id=category_id).topics
-		# print("adfadf",keywords_queryset)
-		# print("adfadf",t)
-		
+		# t = Category.objects.get(id=category_id).topics
+		# {topic num: [기사 개수, 'k1']}
 		keywords_json = {}
 		if keywords_queryset:
 			for idx, value in zip(range(len(keywords_queryset)), keywords_queryset.values()):
-				keywords_json[idx+1]= value[0:3]
+				keywords_json[idx+1]= value[0:2]
 		print(keywords_json)
 		keywords_json = json.dumps(keywords_json)
 
@@ -88,8 +86,6 @@ def get_articles(category):  # category -> '정치' or '경제' or '사회'
 
 # topics 저장
 def save_topics(category, topics, topics_num):
-	print(topics)
-	
 	topics = dict(sorted(topics.items(), key=lambda x: len(x[1][1]), reverse=True))
 	# category 분류
 	if category == '정치':
@@ -105,12 +101,9 @@ def save_topics(category, topics, topics_num):
 		# {1: [ ['k1', ,,,], {id: rate, id: rate, id: rate, ,,,} ] , 2: [ ['k2', ,,,], {id: rate, id: rate, id: rate, ,,,} ] ,,,}
 		keywords = {}
 		for _, k in zip(range(topics_num), topics.keys()):
-			# print('asdasdasdasdasd')
-			keywords[k] = topics[k][0]  # {1: ['k1', ,,,]}
+			article_num = len(topics[k][1])
+			keywords[k] = [article_num, topics[k][0]]  # {1: [기사 개수, 'k1', ,,,]}
 		# topics, keywords 저장
-		print()
-		print()
-		print()
 		print('keywords',keywords)
 		category_object.update(
 			topics=topics,
