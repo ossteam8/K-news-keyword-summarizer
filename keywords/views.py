@@ -49,17 +49,17 @@ class KeywordsListView(ListView):
 class KeywordsDetailView(DetailView):
 	template_name = 'crawling/keywords_detail.html'
 
-	def get(self, request, category_id, topic_num):  # type(keyword): str				
+	def get(self, request, category_id, topics_num):  # type(keyword): str				
 		articles_list = []
 		category = Category.objects.get(pk=category_id).category
 		topics = Category.objects.get(pk=category_id).topics
 		keywords_list = []
 		
 		if topics:
-			if topic_num in topics.keys():
-				keywords_list = topics[topic_num][0]
+			if topics_num in topics.keys():
+				keywords_list = topics[topics_num][0]
 				keyword = keywords_list[0]
-				for id in topics[topic_num][1].keys():
+				for id in topics[topics_num][1].keys():
 					article = Article.objects.filter(pk=id).first()
 					if article:
 						articles_list.append(article)
