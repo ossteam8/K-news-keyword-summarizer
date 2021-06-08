@@ -1,3 +1,4 @@
+
 # Textrank_Summarize
 
 TextRank 는 sentence graph를 구축한 뒤, Graph ranking algorithm인 PageRank를 이용하여 핵심 문장을 선택하고 
@@ -28,3 +29,20 @@ Tf-idf는 빈도수에 초점을 둔 것이 아닌 중요한 특징에 가중치
 
 
 Reference:  https://lovit.github.io/nlp/2019/04/30/textrank/
+
+Reference : 
+
+[Textrank-Summarize](https://github.com/ossteam8/Textrank-Summarize)
+
+위 repositoey는 preprocessing, textrank_keyword, textrank_summarize 를 개발하면서 사용된 test repository입니다.
+
+**Keyword** =>  https://github.com/ossteam8/LDA-TextRank-keyword 
+**Summary** => https://github.com/ossteam8/K-news-keyword-summarizer/tree/main/summary
+
+[standalone code]
+
+[textrank](https://github.com/ossteam8/Textrank-Summarize/blob/develop/textrank_keyword.py)
+
+[summarizer_v2.py](https://github.com/ossteam8/Textrank-Summarize/blob/main/summarizer_v2.py)
+
+[preprocessing.ipynb](https://github.com/ossteam8/Textrank-Summarize/blob/main/test_notebook/preprocessing.ipynb)
