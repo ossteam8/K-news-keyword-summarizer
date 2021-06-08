@@ -10,13 +10,15 @@
 또한 그 키워드 차트를 클릭하면 키워드에 맞는 뉴스들을 나열하며, 원본 url과 요약본을 보여줍니다.
 
 ## 프로젝트 실행 예시
-`메인 페이지`
+`main page`
 ![mainpage](https://user-images.githubusercontent.com/34156840/121178743-d2f8bc00-c899-11eb-9a82-888ed68bde9c.png)
-`category 정치`
+`category politics`
 ![category_chart](https://user-images.githubusercontent.com/34156840/121184087-b2336500-c89f-11eb-9e0c-81bbbf13ab59.png)
 ![category_article](https://user-images.githubusercontent.com/34156840/121182781-62a06980-c89e-11eb-9064-060c873b354e.png)
-`category에 차트를 클릭시 관련 topic 5`
+`category's topic 5`
 ![topic5](https://user-images.githubusercontent.com/34156840/121183351-efe3be00-c89e-11eb-89b7-a83cb4ae976a.png)
+`article summary`
+![summary](https://user-images.githubusercontent.com/34156840/121185447-0ab73200-c8a1-11eb-983e-a48286aed534.png)
 
 
 ## Running project
