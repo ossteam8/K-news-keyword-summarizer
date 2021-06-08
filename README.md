@@ -69,6 +69,10 @@ Our project start crawling, and find keywords at 0:00 every day.
 So just wait until 0:00 then it will start doing jobs with crontab.  
 Finishing this job, now you can see the website with data.**
 
+## Keyword Extractor 
+`LDA` and `TextRank` algorithm combined
+[README_keywords.md](README_keywords.md)
+
 ## Contribution guidelines
 **IF you want to contribute to our project, be sure to review the 
 [contribution guidelines](CONTRIBUTING.md).
