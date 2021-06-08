@@ -8,7 +8,7 @@ Combined LDA and TextRank Algorithm
 이후 각 토픽에 기여하는 문서들에서 추출한 키워드들을 포함하는 문장들에 대해 ```TextRank``` 알고리즘을 재적용합니다.
 
 # Running project 
-install [requirements.txt](keywords/requirements.txt)
+install [requirements.txt](keywords/keywords_extract/requirements.txt)
 
 Installing `Mecab` 
 
