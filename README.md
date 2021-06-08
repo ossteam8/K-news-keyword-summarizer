@@ -27,11 +27,12 @@ If you have crontab error then **check your OS** first.
 Also our project may not support python version under python3. We wish you use python version over 3.**
 
 ### Before running our project 
-**Django version 3.2.4 and mysql for viewing and saving data, BeautifulSoup4 and Goose3 for crawling
-and LDA in gensim and TextRank to extract keywords**  
+Django version 3.2.4 and mysql for viewing and saving data, BeautifulSoup4 and Goose3 for crawling
+and LDA in gensim and TextRank to extract keywords  
 
 ### We wish you to read our [requirements.txt](requirements.txt) for installing packages
-### In order to install **Mecab** please use the line below at your terminal
+### Installing **Mecab** 
+Use the line below at your terminal
 ```
 $ bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
 ```
