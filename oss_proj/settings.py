@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 import json
 from django.core.exceptions import ImproperlyConfigured
-
 import my_settings
 
 
@@ -68,8 +67,8 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    ('* 0 * * *', 'crawling.cron.article_crawling_job', '>> /home/ddtthh/crawling_scheduled_job.log'),
-    ('* 1 * * *', 'keywords.cron.lda_job', '>> /home/ddtthh/lda_scheduled_job.log'),
+    ('0 0 * * *', 'crawling.cron.article_crawling_job', '>> /home/ddtthh/crawling_scheduled_job.log'),
+    ('0 1 * * *', 'keywords.cron.lda_job', '>> /home/ddtthh/lda_scheduled_job.log'),
 ]
 
 CRONTAB_DJANGO_SETTINGS_MODULE = 'oss_proj.settings'

@@ -94,6 +94,12 @@
             data_list.push(keywordset[keys][0]);
             label_list.push(keywordset[keys][1]);
         }
+        var max_data = data_list.reduce(function(previous, current){
+          return previous > current ? previous:current;
+        });
+        max_data = max_data*1.5;
+        var u = 100; //자릿수
+        max_data = Math.round(max_data/u)*u;
         // label_list.push('박범계','아스트라제네카','김효수교수님','김명호_교수님','홍병우교수님','김대원교수님','김무철교수님','박재현교수님','오픈소스프로젝트','김은우교수님','중앙대학교','이창하교수님')
         // data_list.push(200,200,200,200,200,200,200,200,200,200,200,200)
         Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -131,7 +137,7 @@
               yAxes: [{
                 ticks: {
                   min: 0,
-                  max: 800,
+                  max: max_data,
                   maxTicksLimit: 10
                 },
                 gridLines: {

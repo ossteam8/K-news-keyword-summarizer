@@ -23,9 +23,11 @@ class CategoryListView(ListView):
 
 # crontab 에서 실행한 함수에서 save_articles()로 article list 넘겨줌
 def save_articles(politic_article_list, economy_article_list, society_article_list):
+	
 	politic_object = Category.objects.filter(category='정치').first()
 	economy_object = Category.objects.filter(category='경제').first()
 	society_object = Category.objects.filter(category='사회').first()
+	print('시작')
 	for politic, economy, society in zip_longest(politic_article_list, economy_article_list, society_article_list, fillvalue=None):
 		try:
 			if politic:

@@ -1,6 +1,9 @@
 from .preprocessor import Preprocessor
 from .LDAkey_extractor import LDAKeyExtractor
 from .textrank import TextRank
+# from preprocessor import Preprocessor
+# from LDAkey_extractor import LDAKeyExtractor
+# from textrank import TextRank
 import pickle
 from multiprocessing import freeze_support
 import time
@@ -40,19 +43,19 @@ class LDA_TR:
 def run():
     freeze_support()
     st = time.time()
-    with open('sample_data/economy_id.pickle', 'rb') as f:
-        id_news = pickle.load(f)
+    #with open('sample_data/economy_id.pickle', 'rb') as f:
+    #    id_news = pickle.load(f)
     with open('sample_data/politic_id.pickle', 'rb') as f:
-        id_news.extend(pickle.load(f))
-    with open('sample_data/society_id.pickle', 'rb') as f:
-        id_news.extend(pickle.load(f))
+        id_news = (pickle.load(f))
+    #with open('sample_data/society_id.pickle', 'rb') as f:
+    #    id_news.extend(pickle.load(f))
 
-    with open('sample_data/economy_contents.pickle', 'rb') as f:
-        news = pickle.load(f)
+    #with open('sample_data/economy_contents.pickle', 'rb') as f:
+    #    news = pickle.load(f)
     with open('sample_data/politic_contents.pickle', 'rb') as f:
-        news.extend(pickle.load(f))
-    with open('sample_data/society_contents.pickle', 'rb') as f:
-        news.extend(pickle.load(f))
+        news = pickle.load(f)
+    #with open('sample_data/society_contents.pickle', 'rb') as f:
+    #    news.extend(pickle.load(f))
     lda_tr = LDA_TR()
     etc, num = lda_tr.save_topics(news,id_news)
     print('loop')
