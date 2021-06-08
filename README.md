@@ -82,12 +82,15 @@ DATABASES = {
 
 Now you can use the website. But you may not have any news data and keywords.  
   
-Our project use django-crontab for 
-
-
-Our project starts crawling, and finds keywords at 0:00 every day.  
-Wait until 0:00 then it will start doing jobs with crontab.  
-After the jobs are finished, now you can see the website with data.
+Our project use django-crontab for **crawling and keyword extractor job**  at particular time everyday.
+Our project do crawling at 00:00 and keyword extract at 01:00.  Of course, you can change time by modifiy settings.py.  
+```python
+CRONJOBS = [
+    ('0 0 * * *', 'crawling.cron.article_crawling_job', '>> log file location'),
+    ('0 1 * * *', 'keywords.cron.lda_job', '>> log file location'),
+]
+```
+change here and you can run program when you want. **But don't pull pull-request with changing time**
 
 ## Keyword Extractor 
 `LDA` and `TextRank` algorithm combined
