@@ -71,7 +71,7 @@ Finishing this job, now you can see the website with data.**
 
 ## Keyword Extractor 
 `LDA` and `TextRank` algorithm combined
-[README_keywords.md](README_keywords.md)
+[README_keyword.md](README_keyword.md)
 
 ## Contribution guidelines
 **IF you want to contribute to our project, be sure to review the 
