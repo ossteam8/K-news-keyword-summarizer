@@ -16,7 +16,7 @@ top keywords를 뽑기 위하여 LDA와 TextRank를 결합해 활용합니다. �
 
 **If you have crontab error then check your OS** first. 
 
-If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab. 
+<span style="color:red">If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab.</span> 
 
 Also our python may not support python version under python3. We wish you use python version over 3.**
 
