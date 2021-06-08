@@ -10,7 +10,9 @@ Combined LDA and TextRank Algorithm
 # Running project 
 install [requirements.txt](requirements.txt)
 
-In order to install **Mecab** please use the line below at your terminal
+Installing `Mecab` 
+
+Use the line below at your terminal
 ```
 bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
 ```
@@ -57,9 +59,11 @@ LDA토픽 모델링을 위해 다음과 같은 순서로 문서들을 전처리�
 
 사용자 단어 사전을 구축하여 형태소 분석이 잘 되지 않아 추출되지 않는 명사를 잘 인식할 수 있도록 돕는다.
 
-### 사용자 단어 사전 설치 방법 
+[사용자 단어 사전 설치 방법 ] 
 
 (http://blog.naver.com/PostView.nhn?blogId=shino1025&logNo=222179854044&categoryNo=44&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=search)
+
+사용자 단어 사전 적용 방법 :
 
 (1) nnp.csv, user-nnp.csv 다운
 
