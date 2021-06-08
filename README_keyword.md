@@ -3,7 +3,7 @@
 Combined LDA and TextRank Algorithm 
 
 3908개의 뉴스 기사 본문 데이터들을 대상으로 키워드를 추출합니다.
-전처리 과정에서는 노동 집약적으로 만들어진 [불용어사전](keywords/stop.txt)와 [사용자사전]을 이용하였습니다.
+전처리 과정에서는 노동 집약적으로 만들어진 [불용어사전](keywords/keywords_extract/stop.txt)와 [사용자사전]을 이용하였습니다.
 ```LDA``` 알고리즘을 먼저 적용해 relevance에 기반한 ```top-20 keyword```를 추출합니다. 
 이후 각 토픽에 기여하는 문서들에서 추출한 키워드들을 포함하는 문장들에 대해 ```TextRank``` 알고리즘을 재적용합니다.
 
@@ -45,7 +45,7 @@ Below is the Keyword-Extracting process
 
 
 ## Preprocessing
-### [preprocessor.py](keywords/preprocessor.py)
+### [preprocessor.py](keywords/keywords_extract/preprocessor.py)
 
 LDA토픽 모델링을 위해 다음과 같은 순서로 문서들을 전처리한다.
 
@@ -100,7 +100,7 @@ make install
 
 
 ## LDA
-### [LDAkey_extractor](keywords/LDAkey_extractor)
+### [LDAkey_extractor](keywords/keywords_extract/LDAkey_extractor)
 Gensim's LDA topic modeling algorithm implemented
 
 토픽 모델링으로서 LDA는 토픽(주제)별 단어의 분포, 문서별 토픽의 분포를 추정하는 확률적 모형이다. LDA가 실제로 하는 일은 현재 문서들에 등장하는 단어들(w값들)을 보고 어떤 토픽에서 뽑힌건지 단어들의 이면적인 정보를 추론하는 것이다.
@@ -117,7 +117,7 @@ LDA 토픽 모델링을 통해 산출된 각 토픽의 상위 단어들(top-rank
 Reference: [https://lovit.github.io/nlp/2018/09/27/pyldavis_lda/](https://lovit.github.io/nlp/2018/09/27/pyldavis_lda/)
 
 ## TextRank
-### [textrank.py](keywords/textrank.py)
+### [textrank.py](keywords/keywords_extract/textrank.py)
 
 LDA를 통해 선정된 각 토픽별로 토픽에 기여하는 문서들을 대상으로 Relevance Top 20 단어를 포함하는 문장들을 추출한다. 추출된 문장들에 대해서 앞에서 한 것과 같이 전처리 한다.
 
