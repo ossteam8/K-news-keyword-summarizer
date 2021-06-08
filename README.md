@@ -81,7 +81,7 @@ After the jobs are finished, now you can see the website with data.
 [README_keyword.md](README_keyword.md)
 
 ## Summarizer
-`TextRank` algorithm implemented  
+`TextRank` algorithm implemented 
 [README_summarize.md](README_summarize.md)
 
 ## Contribution guidelines
