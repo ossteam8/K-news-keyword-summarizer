@@ -30,7 +30,7 @@ Also our project may not support python version under python3. We wish you use p
 **Django version 3.2.4 and mysql for viewing and saving data, BeautifulSoup4 and Goose3 for crawling
 and LDA in gensim and TextRank to extract keywords**  
 
-### We wish you read our [requirements.txt](requirements.txt) for install packages
+### We wish you to read our [requirements.txt](requirements.txt) for installing packages
 ### In order to install **Mecab** please use the line below at your terminal
 ```
 $ bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
