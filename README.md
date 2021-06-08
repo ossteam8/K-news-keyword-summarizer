@@ -80,6 +80,10 @@ After the jobs are finished, now you can see the website with data.
 `LDA` and `TextRank` algorithm combined
 [README_keyword.md](README_keyword.md)
 
+## Summarizer
+`TextRank` algorithm implemented  
+[README_summarize.md](README_summarize.md)
+
 ## Contribution guidelines
 IF you want to contribute to our project, be sure to review the 
 [contribution guidelines](CONTRIBUTING.md).
