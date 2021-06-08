@@ -25,3 +25,6 @@ Tf-idf는 빈도수에 초점을 둔 것이 아닌 중요한 특징에 가중치
 두 문장에 공통으로 등장한 단어의 개수를 각 문장의 단어 개수의 log 값의 합으로 나눈 것 이다.
 
 <img width="309" alt="cosine" src="https://user-images.githubusercontent.com/80442377/121154131-a89b0480-c881-11eb-8649-efee1f71910e.png">
+
+
+Reference:  https://lovit.github.io/nlp/2019/04/30/textrank/
