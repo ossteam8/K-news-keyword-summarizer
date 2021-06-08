@@ -20,9 +20,9 @@
 
 **Django version==3.2.4**
 
-**If you have crontab error then check your OS** first. 
+If you have crontab error then **check your OS** first. 
 
-If you use Windows, crontab doesn't support Windows. So you must use Linux OS for using crontab. 
+If you use Windows, **crontab doesn't support Windows**. So you must use **Linux OS** to use crontab. 
 
 Also our python may not support python version under python3. We wish you use python version over 3.**
 
