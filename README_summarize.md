@@ -30,8 +30,13 @@ Tf-idf는 빈도수에 초점을 둔 것이 아닌 중요한 특징에 가중치
 
 Reference:  https://lovit.github.io/nlp/2019/04/30/textrank/
 
+### PageRank 공식
 
-## [Textrank-Summarize](https://github.com/ossteam8/Textrank-Summarize)
+<img width="310" alt="pagerank공식" src="https://user-images.githubusercontent.com/80442377/120992094-3a8d0980-c7bd-11eb-9ad8-1f957a45f8a9.png">
+
+
+
+#### [Textrank-Summarize](https://github.com/ossteam8/Textrank-Summarize)
 
 위 repositoey는 preprocessing, textrank_keyword, textrank_summarize 를 개발하면서 사용된 test repository입니다.
 
