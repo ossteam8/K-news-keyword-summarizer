@@ -9,6 +9,8 @@
 
 또한 그 키워드 차트를 클릭하면 키워드에 맞는 뉴스들을 나열하며, 원본 url과 요약본을 보여줍니다.
 
+## 프로젝트 실행 예시
+
 
 ## Running project
 ### Software environment
