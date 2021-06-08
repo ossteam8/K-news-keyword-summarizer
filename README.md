@@ -71,10 +71,10 @@ DATABASES = {
  $ python3 manage.py runserver
 ```
 
-**Then you can use the website. But first you may not have any data of crawling, keywords.  
-Our project start crawling, and find keywords at 0:00 every day.  
-So just wait until 0:00 then it will start doing jobs with crontab.  
-Finishing this job, now you can see the website with data.**
+Now you can use the website. But you may not have any news data and keywords.  
+Our project starts crawling, and finds keywords at 0:00 every day.  
+Wait until 0:00 then it will start doing jobs with crontab.  
+After the jobs are finished, now you can see the website with data.
 
 ## Keyword Extractor 
 `LDA` and `TextRank` algorithm combined
