@@ -27,7 +27,7 @@ does not need to be in-order
 3. stop.txt
 a,is,...,@@@ -> distinguished by commas(,) in .txt file
 
-**[stop.txt](keywords/stop.txt)** is prepared and provided by [linkyouhj](https://github.com/linkyouhj) and [Chae Hui Seon](https://github.com/chaehuiseon)
+**[stop.txt](keywords/keywords_extract/stop.txt)** is prepared and provided by [linkyouhj](https://github.com/linkyouhj) and [Chae Hui Seon](https://github.com/chaehuiseon)
 
 ### For demo
 ```
@@ -105,7 +105,7 @@ make install
 
 
 ## LDA
-### [LDAkey_extractor](keywords/keywords_extract/LDAkey_extractor)
+### [LDAkey_extractor.py](keywords/keywords_extract/LDAkey_extractor.py)
 Gensim's LDA topic modeling algorithm implemented
 
 토픽 모델링으로서 LDA는 토픽(주제)별 단어의 분포, 문서별 토픽의 분포를 추정하는 확률적 모형이다. LDA가 실제로 하는 일은 현재 문서들에 등장하는 단어들(w값들)을 보고 어떤 토픽에서 뽑힌건지 단어들의 이면적인 정보를 추론하는 것이다.
