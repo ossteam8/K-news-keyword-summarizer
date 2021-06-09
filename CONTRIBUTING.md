@@ -14,7 +14,7 @@ just getting started, Github has a
 [how to](https://github.com/ossteam8/oss8_proj/pulls).
 
 Our project team members check your pull requests. Once the pull requests are
-approved and pass continuous integration checks, we will apply 'okay_to_pull' label
+approved and pass continuous integration checks, we will apply `okay_to_pull` label
 to your request. This label means your request will submit to our internal repository.
 After the change has been submitted successfully, your pull request will be merged on GitHub.
 
