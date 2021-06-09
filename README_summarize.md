@@ -21,9 +21,9 @@ Tf-idf는 빈도수에 초점을 둔 것이 아닌 중요한 특징에 가중치
 
 <img width="437" alt="tf-idf(stm)" src="https://user-images.githubusercontent.com/80442377/121154072-94ef9e00-c881-11eb-8d30-6d0cf9021b38.png">
 
-이때, 문장 간 유사도를 측정하기 위하여 Cosine similarity 가 이용되는데, TextRank 는 아래와 같은 문장 간 유사도 척도를 제안했습니다. 
+이때, 문장 간 유사도를 측정하기 위하여 Cosine similarity 가 이용되는데, TextRank는 아래와 같은 문장 간 유사도 척도를 제안했습니다. 
 
-두 문장에 공통으로 등장한 단어의 개수를 각 문장의 단어 개수의 log 값의 합으로 나눈 것 이다.
+두 문장에 공통으로 등장한 단어의 개수를 각 문장의 단어 개수의 log 값의 합으로 나눈 것이다.
 
 <img width="309" alt="cosine" src="https://user-images.githubusercontent.com/80442377/121154131-a89b0480-c881-11eb-8649-efee1f71910e.png">
 
@@ -38,7 +38,7 @@ Reference:  https://lovit.github.io/nlp/2019/04/30/textrank/
 
 #### [Textrank-Summarize](https://github.com/ossteam8/Textrank-Summarize)
 
-위 repositoey는 preprocessing, textrank_keyword, textrank_summarize 를 개발하면서 사용된 test repository입니다.
+위 repository는 preprocessing, textrank_keyword, textrank_summarize 를 개발하면서 사용된 test repository입니다.
 
 **Keyword** =>  https://github.com/ossteam8/LDA-TextRank-keyword 
 
