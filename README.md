@@ -1,5 +1,6 @@
 # K-news keyword summarizer
 ![license badge](https://img.shields.io/github/license/ossteam8/K-news-keyword-summarizer)
+![python version badge](https://img.shields.io/badge/python-3.8-red)
 ## 프로젝트 설명
 우리 프로젝트는 일주일 간의 기사를 크롤링 한 뒤, 카테고리별(정치, 경제, 사회)로 `top keywords`를 뽑아주고 기사를 요약합니다.
 
